@@ -1,10 +1,12 @@
 package jrazek.neuralNetwork.netStructure;
 
+import jrazek.neuralNetwork.abstracts.Neuron;
+
 public class Bias {
-    NeuronOLD neuronOLD;
+    Neuron neuron;
     double value;
-    Bias(NeuronOLD n, double v){
-        this.neuronOLD = n;
+    Bias(Neuron n, double v){
+        this.neuron = n;
         this.value = v;
     }
 }

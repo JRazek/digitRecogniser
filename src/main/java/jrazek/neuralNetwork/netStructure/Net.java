@@ -22,7 +22,7 @@ public class Net {
             if(layerNum == 0){
                 layers.add(new InputLayer(layerNum));
             }
-            else if(layerNum+1 - layersNum == 0 ){
+            else if(layerNum+1 == layersNum){
                 layers.add(new OutputLayer(layers.get(layerNum-1), layerNum));
             }
             else{
