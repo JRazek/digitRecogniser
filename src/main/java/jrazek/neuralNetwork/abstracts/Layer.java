@@ -19,4 +19,7 @@ public abstract class Layer {
     public int getLayerIndex() {
         return layerIndex;
     }
+    public List<Neuron> getNeurons(){
+        return neurons;
+    }
 }

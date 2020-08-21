@@ -7,8 +7,12 @@ import static jrazek.neuralNetwork.utils.Rules.hiddenNeurons;
 public class HiddenLayer extends Layer {
     private Layer previousLayer;
     private Layer nextLayer;
-    HiddenLayer(Layer prev, Layer next, int index){
+    public HiddenLayer(Layer prev, int index){
         super(index);
+    }
+
+    public void setNextLayer(Layer nextLayer) {
+        this.nextLayer = nextLayer;
     }
 
     @Override

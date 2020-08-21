@@ -9,8 +9,9 @@ import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 
 public class OutputLayer extends Layer {
     private Layer previousLayer;
-    OutputLayer(int index){
+    public OutputLayer(Layer prev, int index){
         super(index);
+        this.previousLayer = prev;
     }
 
     @Override
