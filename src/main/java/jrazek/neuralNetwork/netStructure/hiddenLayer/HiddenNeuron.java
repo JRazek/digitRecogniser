@@ -5,6 +5,7 @@ import jrazek.neuralNetwork.abstracts.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 
 import javax.management.RuntimeErrorException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HiddenNeuron extends Neuron {
@@ -12,19 +13,13 @@ public class HiddenNeuron extends Neuron {
     private List<Connection> outputConnections;
     HiddenNeuron(Layer layer){
         super(layer);
+        this.inputConnections = new ArrayList<>();
+        this.outputConnections = new ArrayList<>();
     }
-    private void addConnection(Connection c) throws RuntimeErrorException {
-        if(c.getInputNeuron() == null || c.getOutputNeuron() == null){
-            throw new RuntimeErrorException(new Error("CONNECTION IS INITIATED THE WRONG WAY"));
-        }
-        if(c.getInputNeuron().equals(this)){
-            this.outputConnections.add(c);
-        }
-        else if(c.getOutputNeuron().equals(this)){
-            this.inputConnections.add(c);
-        }
-        else{
-            throw new RuntimeErrorException(new Error("NEITHER OF CONNECTION'S NEURONS IS THE NEURON ITSELF!"));
-        }
+    private void addInputConnection(Connection c) {
+        this.inputConnections.add(c);
+    }
+    private void addOutputConnection(Connection c) {
+        this.outputConnections.add(c);
     }
 }

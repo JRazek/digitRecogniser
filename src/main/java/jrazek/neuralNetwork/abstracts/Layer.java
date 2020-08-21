@@ -12,10 +12,10 @@ public abstract class Layer {
         this.layerIndex = index;
         neurons = new ArrayList<>();
     }
-    void addNeuron(Neuron n){
-        neurons.add(n);
+    protected abstract void initNeurons();
+    public void addNeuron(Neuron n){
+        this.neurons.add(n);
     }
-
     public int getLayerIndex() {
         return layerIndex;
     }
