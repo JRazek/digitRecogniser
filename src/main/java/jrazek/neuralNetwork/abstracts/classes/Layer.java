@@ -1,6 +1,4 @@
-package jrazek.neuralNetwork.abstracts;
-
-import jrazek.neuralNetwork.netStructure.Connection;
+package jrazek.neuralNetwork.abstracts.classes;
 
 import java.util.ArrayList;
 import java.util.List;

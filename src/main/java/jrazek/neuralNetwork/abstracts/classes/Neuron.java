@@ -1,4 +1,4 @@
-package jrazek.neuralNetwork.abstracts;
+package jrazek.neuralNetwork.abstracts.classes;
 
 import jrazek.neuralNetwork.netStructure.Connection;
 

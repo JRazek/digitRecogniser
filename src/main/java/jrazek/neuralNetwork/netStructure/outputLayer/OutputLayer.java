@@ -1,10 +1,7 @@
 package jrazek.neuralNetwork.netStructure.outputLayer;
 
-import jrazek.neuralNetwork.abstracts.Layer;
-import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
-import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
+import jrazek.neuralNetwork.abstracts.classes.Layer;
 
-import static jrazek.neuralNetwork.utils.Rules.hiddenNeurons;
 import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 
 public class OutputLayer extends Layer {

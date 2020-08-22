@@ -1,7 +1,6 @@
 package jrazek.neuralNetwork.netStructure.inputLayer;
 
-import jrazek.neuralNetwork.abstracts.Layer;
-import jrazek.neuralNetwork.abstracts.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.Layer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package jrazek.neuralNetwork.netStructure.inputLayer;
 
-import jrazek.neuralNetwork.abstracts.Layer;
-import jrazek.neuralNetwork.abstracts.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.Layer;
+import jrazek.neuralNetwork.abstracts.classes.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 
 import javax.management.RuntimeErrorException;
@@ -22,9 +22,5 @@ public class InputNeuron extends Neuron {
         else{
             throw new RuntimeErrorException(new Error("Wrong assignment in input neuron!"));
         }
-    }
-
-    public void addOutputConnection(Connection c){
-        this.outputConnections.add(c);
     }
 }

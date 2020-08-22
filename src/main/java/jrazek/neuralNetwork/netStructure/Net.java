@@ -1,7 +1,7 @@
 package jrazek.neuralNetwork.netStructure;
 
-import jrazek.neuralNetwork.abstracts.Layer;
-import jrazek.neuralNetwork.abstracts.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.Layer;
+import jrazek.neuralNetwork.abstracts.classes.Neuron;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
