@@ -72,6 +72,9 @@ public class Net {
             }
         }
     }
+    public void forwardPass(double[] argsArr){
+
+    }
     public void showStructure(){
         int layerNum = 0;
         for(Layer<? extends Neuron> currentLayer : layers){

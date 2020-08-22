@@ -27,5 +27,15 @@ public class InputLayer extends Layer<InputNeuron> {
             super.addNeuron(n);
         }
     }
-
+    public void feed(double [] inputArr) throws RuntimeErrorException {
+        if(inputArr.length != getNeurons().size())
+            throw new RuntimeErrorException(new Error("Invalid size!"));
+        int neuronNum = 0;
+        for(InputNeuron n : super.getNeurons()){
+            if(n == null)
+                throw new RuntimeErrorException(new Error("WRONG NEURON TYPE!"));
+            n.gainInput(inputArr[neuronNum]);
+            neuronNum ++;
+        }
+    }
 }
