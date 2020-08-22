@@ -2,10 +2,11 @@ package jrazek.neuralNetwork.netStructure.hiddenLayer;
 
 import jrazek.neuralNetwork.abstracts.classes.Layer;
 import jrazek.neuralNetwork.abstracts.classes.Neuron;
+import jrazek.neuralNetwork.abstracts.interfaces.DerivedLayer;
 
 import static jrazek.neuralNetwork.utils.Rules.hiddenNeurons;
 
-public class HiddenLayer extends Layer<HiddenNeuron> {
+public class HiddenLayer extends Layer<HiddenNeuron> implements DerivedLayer {
     private Layer<? extends Neuron> previousLayer;
     private Layer<? extends Neuron> nextLayer;
     public HiddenLayer(Layer<? extends Neuron> prev, int index){
@@ -22,5 +23,10 @@ public class HiddenLayer extends Layer<HiddenNeuron> {
         for(int i = 0; i < hiddenNeurons; i ++){
             super.addNeuron(new HiddenNeuron(this));
         }
+    }
+
+    @Override
+    public void takeInputFromPrevLayer() {
+
     }
 }
