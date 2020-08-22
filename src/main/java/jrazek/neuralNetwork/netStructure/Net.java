@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jrazek.neuralNetwork.utils.Rules.*;
+import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 
 public class Net {
     private List<Layer<? extends Neuron>> layers;
@@ -20,6 +21,7 @@ public class Net {
         layers = new ArrayList<>();
         initLayers();
         initNeurons();
+        initBiases();
         initConnections();
     }
     private void initLayers(){
@@ -40,6 +42,18 @@ public class Net {
         for(Layer<? extends Neuron> l : layers){
             if(l != null)
                 l.initNeurons();
+        }
+    }
+    private void initBiases(){
+        for(Layer<? extends Neuron> layer : layers.subList(1, layers.size())){
+            if(layer instanceof DerivedLayer){
+                for(Neuron n : layer.getNeurons()){
+                    if(n instanceof DerivedNeuron){
+                        double randBiasVal = randomDouble(-10, 10);
+                        ((DerivedNeuron) n).setBias(new Bias(n, randBiasVal));
+                    }
+                }
+            }
         }
     }
     private void initConnections(){
