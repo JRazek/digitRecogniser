@@ -5,11 +5,9 @@ import jrazek.neuralNetwork.abstracts.classes.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 
 import javax.management.RuntimeErrorException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InputNeuron extends Neuron {
-
+    private double input;//same as output
     public InputNeuron(Layer<? extends Neuron> layer, int number) {
         super(layer, number);
     }
@@ -21,5 +19,13 @@ public class InputNeuron extends Neuron {
         else{
             throw new RuntimeErrorException(new Error("Wrong assignment in input neuron!"));
         }
+    }
+
+    public double getOutput() {
+        return input;
+    }//as the input is not changed - it just goes unchanged
+
+    public void addInput(double i){
+        this.input = i;
     }
 }

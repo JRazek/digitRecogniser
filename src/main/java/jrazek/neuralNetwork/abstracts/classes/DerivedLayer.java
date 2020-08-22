@@ -1,12 +1,15 @@
 package jrazek.neuralNetwork.abstracts.classes;
 
 
-public abstract class DerivedLayer<T extends Neuron> extends Layer<T> {
+public abstract class DerivedLayer<T extends DerivedNeuron> extends Layer<T> {
     public DerivedLayer(int index) {
         super(index);
     }
 
     public void takeFromPreviousLayer(){
-        System.out.println("TEST");
+        for(T neuron : super.getNeurons()){
+            neuron.sumInputs();
+            neuron.countActivation();
+        }
     }
 }

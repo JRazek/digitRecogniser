@@ -6,7 +6,7 @@ import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 
 import javax.management.RuntimeErrorException;
 
-public abstract class FeedableLayer<T extends InputNeuron> extends Layer<T> {
+public abstract class FeedableLayer extends Layer<InputNeuron> {
     public FeedableLayer(int index) {
         super(index);
     }
@@ -15,7 +15,7 @@ public abstract class FeedableLayer<T extends InputNeuron> extends Layer<T> {
         if(inputArr.length != getNeurons().size())
             throw new RuntimeErrorException(new Error("Invalid size!"));
         int neuronNum = 0;
-        for(T n : super.getNeurons()){
+        for(InputNeuron n : super.getNeurons()){
             if(n == null)
                 throw new RuntimeErrorException(new Error("WRONG NEURON TYPE!"));
             n.addInput(inputArr[neuronNum]);

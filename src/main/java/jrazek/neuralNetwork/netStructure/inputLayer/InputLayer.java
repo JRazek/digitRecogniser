@@ -10,7 +10,7 @@ import java.util.List;
 
 import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 
-public class InputLayer extends FeedableLayer<InputNeuron> {
+public class InputLayer extends FeedableLayer {
     public InputLayer(int index){
         super(index);
     }

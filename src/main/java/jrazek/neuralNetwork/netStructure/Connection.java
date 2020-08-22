@@ -7,9 +7,9 @@ import javax.management.RuntimeErrorException;
 import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 
 public class Connection {
-    private double weight;
-    private Neuron inputNeuron;
-    private Neuron outputNeuron;
+    private final double weight;
+    private final Neuron inputNeuron;
+    private final Neuron outputNeuron;
     public Connection(Neuron input, Neuron output) throws RuntimeErrorException {
         this.weight = randomDouble(-1,1);
         this.inputNeuron = input;
@@ -28,6 +28,10 @@ public class Connection {
             throw new RuntimeErrorException(new Error("YOU CAN ONLY CONNECT NEURONS FROM NEIGHBOUR LAYERS!"));
         }
 
+    }
+
+    public double getWeight() {
+        return weight;
     }
 
     public Neuron getInputNeuron() {
