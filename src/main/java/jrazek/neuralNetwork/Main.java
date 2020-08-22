@@ -7,5 +7,6 @@ public class Main {
         Net net = new Net();
         net.forwardPass(new double[]{1d,2d});
         net.showStructure();
+        net.showOutput();
     }
 }
