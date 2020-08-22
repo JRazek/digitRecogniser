@@ -3,6 +3,7 @@ package jrazek.neuralNetwork.netStructure;
 import jrazek.neuralNetwork.abstracts.classes.Layer;
 import jrazek.neuralNetwork.abstracts.classes.Neuron;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
+import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
@@ -17,46 +18,49 @@ public class Net {
     public Net(){
         layers = new ArrayList<>();
         initLayers();
+        initNeurons();
         initConnections();
     }
     private void initLayers(){
         for(int layerNum = 0; layerNum < layersNum; layerNum ++){
-            if(layerNum == 0){
-                layers.add(new InputLayer(layerNum));
+
+            if(layerNum == 0){//first
+                Layer<InputNeuron> l = new InputLayer(layerNum);
+                layers.add(l);
             }
-            else if(layerNum+1 == layersNum){
+            else if(layerNum+1 == layersNum){//last
                 layers.add(new OutputLayer(layers.get(layerNum-1), layerNum));
             }
-            else{
-                Layer l = new HiddenLayer(layers.get(layerNum-1), layerNum);
-                layers.add(l);
-
-                if(layerNum == 1){
-                    InputLayer il = (InputLayer)layers.get(0);
-                    il.setNextLayer(l);
+            else{//between
+                layers.add(new HiddenLayer(layers.get(layerNum-1), layerNum));
+            }
+            if(layerNum != 0){
+                //add to previous the next neuron. Doesnt check the 0th as it has no prev.
+                if(layers.get(layerNum-1) instanceof InputLayer){
+                    ((InputLayer)layers.get(layerNum-1)).setNextLayer(layers.get(layerNum));
                 }
-                else {
-                    HiddenLayer il = (HiddenLayer) layers.get(layerNum-1);
-                    il.setNextLayer(l);
+                else if(layers.get(layerNum-1) instanceof HiddenLayer){
+                    ((HiddenLayer)layers.get(layerNum-1)).setNextLayer(layers.get(layerNum));
                 }
             }
 
         }
     }
+    private void initNeurons(){
+        for(Layer l : layers){
+            if(l != null)
+                l.initNeurons();
+        }
+    }
     private void initConnections(){
+
+    }
+    public void showStructure(){
         int layerNum = 0;
-        for(Layer layer1 : layers){
-            for(Neuron inputNeuron : layer1.getNeurons()){//input stands for input in connection
-                for(Neuron outputNeuron : layer1.getNeurons()){//same as for input
-                    Connection conn = new Connection(inputNeuron, outputNeuron);
-                    inputNeuron.addConnection(conn);
-                    outputNeuron.addConnection(conn);
-                }
-            }
+        for(Layer currentLayer : layers){
+            if(currentLayer != null)
+                System.out.println(layerNum + " type: " + currentLayer.getNeurons());
             layerNum++;
-            if(layerNum + 1 == layersNum){
-                break;
-            }
         }
     }
 }

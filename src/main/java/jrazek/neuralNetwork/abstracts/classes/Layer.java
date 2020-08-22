@@ -1,24 +1,36 @@
 package jrazek.neuralNetwork.abstracts.classes;
 
+
+import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Layer {
-    private List<Neuron> neurons;
+public abstract class Layer <T extends Neuron>{
+    private List<T> neurons;
     private int layerIndex;//number of layer starting from 0
     public Layer(int index){
         this.layerIndex = index;
         neurons = new ArrayList<>();
     }
-    protected abstract void initNeurons();
-    public void addNeuron(Neuron n){
+    public abstract void initNeurons();
+    protected void addNeuron(T n){
         this.neurons.add(n);
     }
     public int getLayerIndex() {
         return layerIndex;
     }
-    public List<Neuron> getNeurons(){
+    public List<T> getNeurons(){
         return neurons;
     }
-    public abstract void feed(double [] inputArr);
+    public void feed(double [] inputArr) throws RuntimeErrorException {
+        if(inputArr.length != getNeurons().size())
+            throw new RuntimeErrorException(new Error("Invalid size!"));
+        int neuronNum = 0;
+        for(T n : neurons){
+            if(n == null)
+                throw new RuntimeErrorException(new Error("WRONG NEURON TYPE!"));
+            n.gainInput(inputArr[neuronNum]);
+            neuronNum ++;
+        }
+    }
 }
