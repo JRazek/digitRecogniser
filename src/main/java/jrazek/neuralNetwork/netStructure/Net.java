@@ -7,6 +7,7 @@ import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
+import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 import static jrazek.neuralNetwork.utils.Rules.*;
 
 public class Net {
-    private List<Layer> layers;
+    private List<Layer<? extends Neuron>> layers;
     public Net(){
         layers = new ArrayList<>();
         initLayers();
@@ -25,8 +26,7 @@ public class Net {
         for(int layerNum = 0; layerNum < layersNum; layerNum ++){
 
             if(layerNum == 0){//first
-                Layer<InputNeuron> l = new InputLayer(layerNum);
-                layers.add(l);
+                layers.add(new InputLayer(layerNum));
             }
             else if(layerNum+1 == layersNum){//last
                 layers.add(new OutputLayer(layers.get(layerNum-1), layerNum));
@@ -47,7 +47,7 @@ public class Net {
         }
     }
     private void initNeurons(){
-        for(Layer l : layers){
+        for(Layer<? extends Neuron> l : layers){
             if(l != null)
                 l.initNeurons();
         }
@@ -57,7 +57,7 @@ public class Net {
     }
     public void showStructure(){
         int layerNum = 0;
-        for(Layer currentLayer : layers){
+        for(Layer<? extends Neuron> currentLayer : layers){
             if(currentLayer != null)
                 System.out.println(layerNum + " type: " + currentLayer.getNeurons());
             layerNum++;

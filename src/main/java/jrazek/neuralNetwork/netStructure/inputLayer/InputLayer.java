@@ -11,12 +11,12 @@ import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 
 public class InputLayer extends Layer<InputNeuron> {
     private List<Double> inputs;
-    private Layer<InputNeuron> nextLayer;
+    private Layer<? extends Neuron> nextLayer;
     public InputLayer(int index){
         super(index);
         inputs = new ArrayList<>();
     }
-    public void setNextLayer(Layer<InputNeuron> nextLayer) {
+    public void setNextLayer(Layer<? extends Neuron> nextLayer) {
         this.nextLayer = nextLayer;
     }
 

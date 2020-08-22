@@ -10,8 +10,8 @@ import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 import static jrazek.neuralNetwork.utils.Rules.outputNeurons;
 
 public class OutputLayer extends Layer<OutputNeuron> {
-    private Layer<Neuron> previousLayer;
-    public OutputLayer(Layer<Neuron> prev, int index){
+    private Layer<? extends Neuron> previousLayer;
+    public OutputLayer(Layer<? extends Neuron> prev, int index){
         super(index);
         this.previousLayer = prev;
     }
