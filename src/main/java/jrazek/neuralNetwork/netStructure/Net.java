@@ -2,14 +2,11 @@ package jrazek.neuralNetwork.netStructure;
 
 import jrazek.neuralNetwork.abstracts.classes.Layer;
 import jrazek.neuralNetwork.abstracts.classes.Neuron;
-import jrazek.neuralNetwork.abstracts.interfaces.DerivedLayer;
-import jrazek.neuralNetwork.abstracts.interfaces.FeedableLayer;
+import jrazek.neuralNetwork.abstracts.classes.DerivedLayer;
+import jrazek.neuralNetwork.abstracts.classes.FeedableLayer;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
-import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
-import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
-import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +73,12 @@ public class Net {
     }
     public void forwardPass(double[] argsArr){
         if(layers.get(0) instanceof FeedableLayer){
-            ((FeedableLayer) layers.get(0)).feed(argsArr);
+            ((FeedableLayer<? extends Neuron>) layers.get(0)).feed(argsArr);
         }
         //iterates except for first
         for (Layer<? extends Neuron> layer : layers.subList(1, layers.size())){
             if(layer instanceof DerivedLayer){
-                ((DerivedLayer) layer).takeInputFromPrevLayer();
+                ((DerivedLayer<? extends Neuron>) layer).TEST();
             }
         }
     }

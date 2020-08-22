@@ -2,14 +2,11 @@ package jrazek.neuralNetwork.netStructure.outputLayer;
 
 import jrazek.neuralNetwork.abstracts.classes.Layer;
 import jrazek.neuralNetwork.abstracts.classes.Neuron;
-import jrazek.neuralNetwork.abstracts.interfaces.DerivedLayer;
-import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
-
-import javax.management.RuntimeErrorException;
+import jrazek.neuralNetwork.abstracts.classes.DerivedLayer;
 
 import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 
-public class OutputLayer extends Layer<OutputNeuron> implements DerivedLayer {
+public class OutputLayer extends DerivedLayer<OutputNeuron> {
     private Layer<? extends Neuron> previousLayer;
     public OutputLayer(Layer<? extends Neuron> prev, int index){
         super(index);
@@ -23,8 +20,4 @@ public class OutputLayer extends Layer<OutputNeuron> implements DerivedLayer {
         }
     }
 
-    @Override
-    public void takeInputFromPrevLayer() {
-
-    }
 }
