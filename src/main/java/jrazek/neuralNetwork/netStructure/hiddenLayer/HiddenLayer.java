@@ -1,6 +1,7 @@
 package jrazek.neuralNetwork.netStructure.hiddenLayer;
 
 import jrazek.neuralNetwork.abstracts.Layer;
+import jrazek.neuralNetwork.abstracts.Neuron;
 
 import static jrazek.neuralNetwork.utils.Rules.hiddenNeurons;
 

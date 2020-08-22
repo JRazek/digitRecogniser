@@ -1,8 +1,10 @@
 package jrazek.neuralNetwork.abstracts;
 
-import java.util.List;
+import jrazek.neuralNetwork.netStructure.Connection;
 
-public abstract class Neuron {
+import javax.management.RuntimeErrorException;
+
+public abstract class Neuron{
     private Layer layer;
     public Neuron(Layer layer){
         this.layer = layer;
@@ -10,5 +12,7 @@ public abstract class Neuron {
     public Layer getLayer() {
         return layer;
     }
+    public abstract void addConnection(Connection conn) throws RuntimeErrorException;
+
 }
 

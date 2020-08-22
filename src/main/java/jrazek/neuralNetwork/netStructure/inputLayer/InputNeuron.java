@@ -14,6 +14,16 @@ public class InputNeuron extends Neuron {
         super(layer);
         outputConnections = new ArrayList<>();
     }
+
+    @Override
+    public void addConnection(Connection conn) throws RuntimeErrorException {
+        if(conn.getInputNeuron().equals(this))
+            outputConnections.add(conn);
+        else{
+            throw new RuntimeErrorException(new Error("Wrong assignment in input neuron!"));
+        }
+    }
+
     public void addOutputConnection(Connection c){
         this.outputConnections.add(c);
     }

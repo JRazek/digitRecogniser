@@ -22,7 +22,7 @@ public class InputLayer extends Layer {
     @Override
     protected void initNeurons() {
         for(int i = 0; i < inputNeurons; i ++){
-            Neuron n = new InputNeuron(this);
+            InputNeuron n = new InputNeuron(this);
             super.addNeuron(n);
         }
     }

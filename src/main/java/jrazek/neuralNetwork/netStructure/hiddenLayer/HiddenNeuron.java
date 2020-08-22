@@ -16,10 +16,15 @@ public class HiddenNeuron extends Neuron {
         this.inputConnections = new ArrayList<>();
         this.outputConnections = new ArrayList<>();
     }
-    private void addInputConnection(Connection c) {
-        this.inputConnections.add(c);
-    }
-    private void addOutputConnection(Connection c) {
-        this.outputConnections.add(c);
+
+    @Override
+    public void addConnection(Connection conn) {
+        if(conn.getInputNeuron().equals(this))
+            outputConnections.add(conn);
+        else if(conn.getOutputNeuron().equals(this))
+            inputConnections.add(conn);
+        else{
+            throw new RuntimeErrorException(new Error("Wrong assignment of connection in hidden neuron!"));
+        }
     }
 }
