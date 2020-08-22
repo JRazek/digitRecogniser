@@ -63,7 +63,9 @@ public class Net {
             }
         }
     }
-    public void forwardPass(double[] argsArr){
+    public void forwardPass(double[] argsArr)throws RuntimeException{
+        if(argsArr.length != inputNeurons)
+            throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!"));
         if(layers.get(0) instanceof FeedableLayer){
             ((FeedableLayer<? extends InputNeuron>) layers.get(0)).feed(argsArr);
         }

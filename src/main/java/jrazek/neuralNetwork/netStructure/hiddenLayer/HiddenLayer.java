@@ -12,7 +12,7 @@ public class HiddenLayer extends DerivedLayer<HiddenNeuron> {
     @Override
     public void initNeurons() {
         for(int i = 0; i < hiddenNeurons; i ++){
-            super.addNeuron(new HiddenNeuron(this));
+            super.addNeuron(new HiddenNeuron(this, i));
         }
     }
 

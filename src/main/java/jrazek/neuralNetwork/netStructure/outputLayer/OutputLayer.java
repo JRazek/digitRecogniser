@@ -10,7 +10,7 @@ public class OutputLayer extends DerivedLayer<OutputNeuron> {
     @Override
     public void initNeurons() {
         for(int i = 0; i < outputNeurons; i ++){
-            super.addNeuron(new OutputNeuron(this));
+            super.addNeuron(new OutputNeuron(this, i));
         }
     }
 

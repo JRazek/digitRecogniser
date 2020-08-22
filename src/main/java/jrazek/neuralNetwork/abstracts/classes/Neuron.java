@@ -9,8 +9,9 @@ import java.util.List;
 public abstract class Neuron{
     private Layer<? extends Neuron> layer;
     private double inputValue = 0;
+    private int num; //number from top and 0 in layer
     protected List<Connection> connections;
-    public Neuron(Layer<? extends Neuron> layer){
+    public Neuron(Layer<? extends Neuron> layer, int number){
         this.layer = layer;
         connections = new ArrayList<>();
     }

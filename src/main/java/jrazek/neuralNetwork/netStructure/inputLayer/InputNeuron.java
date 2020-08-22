@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputNeuron extends Neuron {
-    InputNeuron(Layer<? extends Neuron> layer){
-        super(layer);
+
+    public InputNeuron(Layer<? extends Neuron> layer, int number) {
+        super(layer, number);
     }
 
     @Override

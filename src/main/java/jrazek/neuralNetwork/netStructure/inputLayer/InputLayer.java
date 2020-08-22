@@ -18,7 +18,7 @@ public class InputLayer extends FeedableLayer<InputNeuron> {
     @Override
     public void initNeurons() {
         for(int i = 0; i < inputNeurons; i ++){
-            InputNeuron n = new InputNeuron(this);
+            InputNeuron n = new InputNeuron(this, i);
             super.addNeuron(n);
         }
     }

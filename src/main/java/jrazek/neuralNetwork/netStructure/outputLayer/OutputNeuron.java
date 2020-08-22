@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputNeuron extends Neuron {
-    public OutputNeuron(Layer<? extends Neuron> layer) {
-        super(layer);
+    public OutputNeuron(Layer<? extends Neuron> layer, int number) {
+        super(layer, number);
     }
 
     @Override

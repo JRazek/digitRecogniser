@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HiddenNeuron extends Neuron {
-    HiddenNeuron(Layer<? extends Neuron> layer){
-        super(layer);
+
+    public HiddenNeuron(Layer<? extends Neuron> layer, int number) {
+        super(layer, number);
     }
 
     @Override
