@@ -84,4 +84,10 @@ public class Net {
             Neuron neuron = layer.getNeurons().get(neuronNum);
         }
     }
+    public void showOutput(){
+        Layer<? extends Neuron> l = layers.get(layersNum - 1);
+        if(l instanceof OutputLayer){
+            ((OutputLayer) l).showOutput();
+        }
+    }
 }
