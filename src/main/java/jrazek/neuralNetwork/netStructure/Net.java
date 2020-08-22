@@ -75,7 +75,7 @@ public class Net {
     }
     public void showStructure(){
         for(Layer<? extends Neuron> currentLayer : layers){
-            System.out.println(currentLayer.getLayerIndex() + " type: " + currentLayer.getNeurons());
+            System.out.println(currentLayer.getLayerIndex() + " neurons: " + currentLayer.getNeurons());
         }
     }
     public void showConnections(int layerNum, int neuronNum){
