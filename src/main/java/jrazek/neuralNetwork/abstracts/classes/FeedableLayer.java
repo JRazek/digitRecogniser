@@ -2,11 +2,24 @@ package jrazek.neuralNetwork.abstracts.classes;
 
 import jrazek.neuralNetwork.abstracts.classes.Layer;
 import jrazek.neuralNetwork.abstracts.classes.Neuron;
+import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 
-public abstract class FeedableLayer<T extends Neuron> extends Layer<T> {
+import javax.management.RuntimeErrorException;
+
+public abstract class FeedableLayer<T extends InputNeuron> extends Layer<T> {
     public FeedableLayer(int index) {
         super(index);
     }
 
-    public abstract void feed(double[] argsArr);
+    public void feed(double [] inputArr) throws RuntimeErrorException {
+        if(inputArr.length != getNeurons().size())
+            throw new RuntimeErrorException(new Error("Invalid size!"));
+        int neuronNum = 0;
+        for(T n : super.getNeurons()){
+            if(n == null)
+                throw new RuntimeErrorException(new Error("WRONG NEURON TYPE!"));
+            n.addInput(inputArr[neuronNum]);
+            neuronNum ++;
+        }
+    }
 }

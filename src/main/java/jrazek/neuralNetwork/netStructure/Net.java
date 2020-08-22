@@ -5,7 +5,9 @@ import jrazek.neuralNetwork.abstracts.classes.Neuron;
 import jrazek.neuralNetwork.abstracts.classes.DerivedLayer;
 import jrazek.neuralNetwork.abstracts.classes.FeedableLayer;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
+import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
+import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 
 import java.util.ArrayList;
@@ -28,21 +30,11 @@ public class Net {
                 layers.add(new InputLayer(layerNum));
             }
             else if(layerNum+1 == layersNum){//last
-                layers.add(new OutputLayer(layers.get(layerNum-1), layerNum));
+                layers.add(new OutputLayer(layerNum));
             }
             else{//between
-                layers.add(new HiddenLayer(layers.get(layerNum-1), layerNum));
+                layers.add(new HiddenLayer(layerNum));
             }
-            if(layerNum != 0){
-                //add to previous the next neuron. Doesnt check the 0th as it has no prev.
-                if(layers.get(layerNum-1) instanceof InputLayer){
-                    ((InputLayer)layers.get(layerNum-1)).setNextLayer(layers.get(layerNum));
-                }
-                else if(layers.get(layerNum-1) instanceof HiddenLayer){
-                    ((HiddenLayer)layers.get(layerNum-1)).setNextLayer(layers.get(layerNum));
-                }
-            }
-
         }
     }
     private void initNeurons(){
@@ -73,21 +65,24 @@ public class Net {
     }
     public void forwardPass(double[] argsArr){
         if(layers.get(0) instanceof FeedableLayer){
-            ((FeedableLayer<? extends Neuron>) layers.get(0)).feed(argsArr);
+            ((FeedableLayer<? extends InputNeuron>) layers.get(0)).feed(argsArr);
         }
         //iterates except for first
         for (Layer<? extends Neuron> layer : layers.subList(1, layers.size())){
             if(layer instanceof DerivedLayer){
-                ((DerivedLayer<? extends Neuron>) layer).TEST();
+                ((DerivedLayer<? extends Neuron>) layer).takeFromPreviousLayer();
             }
         }
     }
     public void showStructure(){
-        int layerNum = 0;
         for(Layer<? extends Neuron> currentLayer : layers){
-            if(currentLayer != null)
-                System.out.println(layerNum + " type: " + currentLayer.getNeurons());
-            layerNum++;
+            System.out.println(currentLayer.getLayerIndex() + " type: " + currentLayer.getNeurons());
+        }
+    }
+    public void showConnections(int layerNum, int neuronNum){
+        Layer<? extends Neuron> layer = layers.get(layerNum);
+        if(layer instanceof DerivedLayer){
+            Neuron neuron = layer.getNeurons().get(neuronNum);
         }
     }
 }
