@@ -11,7 +11,7 @@ import java.util.List;
 public class InputNeuron extends Neuron {
     private List<Connection> outputConnections;
     private double input;
-    InputNeuron(Layer layer){
+    InputNeuron(Layer<? extends Neuron> layer){
         super(layer);
         this.input = 0;
         this.outputConnections = new ArrayList<>();

@@ -12,7 +12,7 @@ public class HiddenNeuron extends Neuron {
     private List<Connection> inputConnections;
     private List<Connection> outputConnections;
     private double netSum;
-    HiddenNeuron(Layer layer){
+    HiddenNeuron(Layer<? extends Neuron> layer){
         super(layer);
         this.inputConnections = new ArrayList<>();
         this.outputConnections = new ArrayList<>();

@@ -5,11 +5,11 @@ import jrazek.neuralNetwork.netStructure.Connection;
 import javax.management.RuntimeErrorException;
 
 public abstract class Neuron{
-    private Layer layer;
-    public Neuron(Layer layer){
+    private Layer<? extends Neuron> layer;
+    public Neuron(Layer<? extends Neuron> layer){
         this.layer = layer;
     }
-    public Layer getLayer() {
+    public Layer<? extends Neuron> getLayer() {
         return layer;
     }
     public abstract void addConnection(Connection conn) throws RuntimeErrorException;
