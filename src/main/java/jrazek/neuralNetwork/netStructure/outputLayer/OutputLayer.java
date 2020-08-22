@@ -7,7 +7,6 @@ import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import javax.management.RuntimeErrorException;
 
 import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
-import static jrazek.neuralNetwork.utils.Rules.outputNeurons;
 
 public class OutputLayer extends Layer<OutputNeuron> {
     private Layer<? extends Neuron> previousLayer;

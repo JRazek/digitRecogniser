@@ -53,7 +53,24 @@ public class Net {
         }
     }
     private void initConnections(){
+        //the first layer catches the next except the last layer
 
+        int layerNum = 0;
+        for(Layer<? extends Neuron> layer : layers){
+
+            for(Neuron catcher : layer.getNeurons()){
+                for(Neuron caught : layers.get(layerNum + 1).getNeurons()){
+                    Connection conn = new Connection(catcher, caught);
+                    catcher.addConnection(conn);
+                    caught.addConnection(conn);
+                }
+            }
+
+            layerNum++;
+            if(layerNum + 1 == layersNum){
+                break;
+            }
+        }
     }
     public void showStructure(){
         int layerNum = 0;
