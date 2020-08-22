@@ -10,17 +10,22 @@ import java.util.List;
 
 public class InputNeuron extends Neuron {
     private List<Connection> outputConnections;
+    private double input;
     InputNeuron(Layer layer){
         super(layer);
-        outputConnections = new ArrayList<>();
+        this.input = 0;
+        this.outputConnections = new ArrayList<>();
     }
 
     @Override
     public void addConnection(Connection conn) throws RuntimeErrorException {
         if(conn.getInputNeuron().equals(this))
-            outputConnections.add(conn);
+            this.outputConnections.add(conn);
         else{
             throw new RuntimeErrorException(new Error("Wrong assignment in input neuron!"));
         }
+    }
+    protected void feed(double val){
+        this.input = val;
     }
 }
