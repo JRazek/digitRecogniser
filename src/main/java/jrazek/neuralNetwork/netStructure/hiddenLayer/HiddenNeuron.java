@@ -11,10 +11,12 @@ import java.util.List;
 public class HiddenNeuron extends Neuron {
     private List<Connection> inputConnections;
     private List<Connection> outputConnections;
+    private double netSum;
     HiddenNeuron(Layer layer){
         super(layer);
         this.inputConnections = new ArrayList<>();
         this.outputConnections = new ArrayList<>();
+        this.netSum = 0;
     }
 
     @Override
@@ -26,5 +28,10 @@ public class HiddenNeuron extends Neuron {
         else{
             throw new RuntimeErrorException(new Error("Wrong assignment of connection in hidden neuron!"));
         }
+    }
+
+    @Override
+    protected void gainInput(double val) {
+        netSum += val;
     }
 }

@@ -25,7 +25,7 @@ public class InputNeuron extends Neuron {
             throw new RuntimeErrorException(new Error("Wrong assignment in input neuron!"));
         }
     }
-    protected void feed(double val){
+    protected void gainInput(double val){
         this.input = val;
     }
 }

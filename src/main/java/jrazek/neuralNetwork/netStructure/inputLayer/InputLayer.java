@@ -35,7 +35,7 @@ public class InputLayer extends Layer {
             if(!(n instanceof InputNeuron))
                 throw new RuntimeErrorException(new Error("WRONG NEURON TYPE!"));
             InputNeuron inputNeuron = (InputNeuron) n;
-            inputNeuron.feed(inputArr[neuronNum]);
+            inputNeuron.gainInput(inputArr[neuronNum]);
             neuronNum ++;
         }
     }

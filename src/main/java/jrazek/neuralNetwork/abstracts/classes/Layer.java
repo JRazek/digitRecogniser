@@ -20,4 +20,5 @@ public abstract class Layer {
     public List<Neuron> getNeurons(){
         return neurons;
     }
+    public abstract void feed(double [] inputArr);
 }

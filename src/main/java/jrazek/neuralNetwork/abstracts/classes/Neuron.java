@@ -13,6 +13,6 @@ public abstract class Neuron{
         return layer;
     }
     public abstract void addConnection(Connection conn) throws RuntimeErrorException;
-
+    protected abstract void gainInput(double val);
 }
 
