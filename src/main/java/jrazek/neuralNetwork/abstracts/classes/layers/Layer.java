@@ -1,4 +1,6 @@
-package jrazek.neuralNetwork.abstracts.classes;
+package jrazek.neuralNetwork.abstracts.classes.layers;
+import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package jrazek.neuralNetwork.netStructure.inputLayer;
 
-import jrazek.neuralNetwork.abstracts.classes.Layer;
-import jrazek.neuralNetwork.abstracts.classes.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
+import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 
 import javax.management.RuntimeErrorException;

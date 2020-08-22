@@ -1,12 +1,6 @@
 package jrazek.neuralNetwork.netStructure.inputLayer;
 
-import jrazek.neuralNetwork.abstracts.classes.Layer;
-import jrazek.neuralNetwork.abstracts.classes.Neuron;
-import jrazek.neuralNetwork.abstracts.classes.FeedableLayer;
-
-import javax.management.RuntimeErrorException;
-import java.util.ArrayList;
-import java.util.List;
+import jrazek.neuralNetwork.abstracts.classes.layers.FeedableLayer;
 
 import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 

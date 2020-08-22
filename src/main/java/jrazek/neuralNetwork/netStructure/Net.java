@@ -1,10 +1,12 @@
 package jrazek.neuralNetwork.netStructure;
 
-import jrazek.neuralNetwork.abstracts.classes.*;
+import jrazek.neuralNetwork.abstracts.classes.layers.DerivedLayer;
+import jrazek.neuralNetwork.abstracts.classes.layers.FeedableLayer;
+import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
+import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
+import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
-import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
-import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 
 import java.util.ArrayList;
@@ -79,15 +81,15 @@ public class Net {
         }
     }
     public void showConnections(int layerNum, int neuronNum){
-        Layer<? extends Neuron> layer = layers.get(layerNum);
-        if(layer instanceof DerivedLayer){
-            Neuron neuron = layer.getNeurons().get(neuronNum);
-        }
+
     }
     public void showOutput(){
         Layer<? extends Neuron> l = layers.get(layersNum - 1);
         if(l instanceof OutputLayer){
             ((OutputLayer) l).showOutput();
         }
+    }
+    public void backwardPropagate(double[] desiredValues){
+
     }
 }

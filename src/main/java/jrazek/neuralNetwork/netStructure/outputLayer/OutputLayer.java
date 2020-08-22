@@ -1,7 +1,6 @@
 package jrazek.neuralNetwork.netStructure.outputLayer;
-import jrazek.neuralNetwork.abstracts.classes.DerivedLayer;
-import jrazek.neuralNetwork.abstracts.classes.DerivedNeuron;
-import jrazek.neuralNetwork.abstracts.classes.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.layers.DerivedLayer;
+import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 
 import static jrazek.neuralNetwork.utils.Rules.outputNeurons;
 
@@ -21,5 +20,6 @@ public class OutputLayer extends DerivedLayer<OutputNeuron> {
             System.out.println(neuron.getActivationValue());
         }
     }
+
 
 }

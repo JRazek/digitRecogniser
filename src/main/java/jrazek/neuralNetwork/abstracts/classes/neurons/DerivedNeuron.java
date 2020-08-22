@@ -1,5 +1,6 @@
-package jrazek.neuralNetwork.abstracts.classes;
+package jrazek.neuralNetwork.abstracts.classes.neurons;
 
+import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 

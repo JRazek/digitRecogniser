@@ -1,6 +1,6 @@
 package jrazek.neuralNetwork.netStructure;
 
-import jrazek.neuralNetwork.abstracts.classes.Neuron;
+import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 
 import javax.management.RuntimeErrorException;
 
