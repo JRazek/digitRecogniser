@@ -39,6 +39,8 @@ public abstract class DerivedNeuron extends Neuron{
     }
     public void countActivation(){
         activationValue = 1/(1+Math.pow(Math.E, -netValue));
+        if(activationValue >= 1 || activationValue < 0)
+            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!"));
     }
     public double getActivationValue() {
         return activationValue;
