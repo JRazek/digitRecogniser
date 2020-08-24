@@ -9,6 +9,7 @@ public class Main {
         BackpropagationModule backpropagationModule = new BackpropagationModule(net);
         net.forwardPass(new double[]{1d,2d});
         backpropagationModule.backPropagate(new double[]{0.99, 0.01});
+        //todo should make the sum of shuffled n training examples
         net.showStructure();
         net.showOutput();
     }
