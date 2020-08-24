@@ -11,6 +11,9 @@ import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
 
 public class BackpropagationModule {
     final private Net net;
@@ -29,13 +32,14 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         double errorT = getErrorT(expected);
-    }
-    private double derivative(Connection c, double Error, double x){
-        Connection currentChecked = null;
-
-        for(Layer<? extends DerivedNeuron> layer : derivedLayers){
-            //todo get the path
+        for (Connection conn : net.getConnections()){
+            conn.updateWeight(-gradientDescentRate*derivative(conn, errorT));
         }
+    }
+    private double derivative(Connection c, double Error){
+        Connection currentChecked = null;
+        double x = c.getWeight();
+        //todo
         return 0;
     }
     private double getErrorT(double [] expected){

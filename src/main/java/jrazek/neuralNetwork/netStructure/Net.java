@@ -18,13 +18,16 @@ import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 
 public class Net {
     private List<Layer<? extends Neuron>> layers;
+    private List<Connection> connections;
     public Net(){
         layers = new ArrayList<>();
+        connections = new ArrayList<>();
         initLayers();
         initNeurons();
         initBiases();
         initConnections();
     }
+
     private void initLayers(){
         for(int layerNum = 0; layerNum < layersNum; layerNum ++){
 
@@ -58,8 +61,6 @@ public class Net {
         }
     }
     private void initConnections(){
-        //the first layer catches the next except the last layer
-
         int layerNum = 0;
         for(Layer<? extends Neuron> layer : layers){
 
@@ -68,6 +69,7 @@ public class Net {
                     Connection conn = new Connection(catcher, caught);
                     catcher.addConnection(conn);
                     caught.addConnection(conn);
+                    connections.add(0, conn);
                 }
             }
 
@@ -112,6 +114,9 @@ public class Net {
             throw new RuntimeErrorException(new Error("2123 ERROR"));
     }
 
+    public List<Connection> getConnections() {
+        return connections;
+    }
     public List<Layer<? extends Neuron>> getLayers() {
         return layers;
     }

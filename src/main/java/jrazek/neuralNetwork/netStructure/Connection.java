@@ -7,7 +7,7 @@ import javax.management.RuntimeErrorException;
 import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 
 public class Connection {
-    private final double weight;
+    private double weight;
     private final Neuron inputNeuron;
     private final Neuron outputNeuron;
     public Connection(Neuron input, Neuron output) throws RuntimeErrorException {
@@ -37,8 +37,10 @@ public class Connection {
     public Neuron getInputNeuron() {
         return inputNeuron;
     }
-
+    public void updateWeight(double delta){
+        this.weight += weight;
+    }
     public Neuron getOutputNeuron() {
         return outputNeuron;
-    }
+    }//the neuron that conn belongs to
 }
