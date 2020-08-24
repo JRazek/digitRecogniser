@@ -10,6 +10,7 @@ import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +33,13 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         double errorT = getErrorT(expected);
+        Map<Connection, Double> gradient = new HashMap<>(net.getConnections().size());
         for (Connection conn : net.getConnections()){
-            conn.updateWeight(-gradientDescentRate*derivative(conn, errorT));
+            gradient.put(conn, -gradientDescentRate*derivative(conn, errorT));
+        }
+        for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
+            entry.getKey().updateWeight(entry.getValue());
+            //weights should be updated after calculating all of the derivatives
         }
     }
     private double derivative(Connection c, double Error){
