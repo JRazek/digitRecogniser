@@ -111,4 +111,8 @@ public class Net {
         else
             throw new RuntimeErrorException(new Error("2123 ERROR"));
     }
+
+    public List<Layer<? extends Neuron>> getLayers() {
+        return layers;
+    }
 }
