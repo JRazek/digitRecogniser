@@ -26,6 +26,7 @@ public class Net {
         initNeurons();
         initBiases();
         initConnections();
+        reset();
     }
 
     private void initLayers(){
@@ -80,6 +81,7 @@ public class Net {
         }
     }
     public void forwardPass(double[] argsArr)throws RuntimeException{
+        reset();
         if(argsArr.length != inputNeurons)
             throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!"));
         if(layers.get(0) instanceof FeedableLayer){
@@ -89,6 +91,14 @@ public class Net {
         for (Layer<? extends Neuron> layer : layers.subList(1, layers.size())){
             if(layer instanceof DerivedLayer){
                 ((DerivedLayer<? extends DerivedNeuron>) layer).takeFromPreviousLayer();
+            }
+        }
+    }
+    private void reset(){
+        List<Layer<? extends Neuron>> layers = this.layers.subList(1, this.layers.size());
+        for(Layer<? extends Neuron> layer : layers){
+            if(layer instanceof DerivedLayer){
+                ((DerivedLayer<? extends DerivedNeuron>) layer).reset();
             }
         }
     }

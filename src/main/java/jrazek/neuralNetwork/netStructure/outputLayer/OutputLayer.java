@@ -20,5 +20,4 @@ public class OutputLayer extends DerivedLayer<OutputNeuron> {
             System.out.println(neuron.getActivationValue());
         }
     }
-
 }

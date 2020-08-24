@@ -6,6 +6,7 @@ import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
+import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import javax.management.RuntimeErrorException;
@@ -45,7 +46,13 @@ public class BackpropagationModule {
     private double derivative(Connection c, double Error){
         Connection currentChecked = null;
         double x = c.getWeight();
-        //todo
+        double result = ((DerivedNeuron)c.getOutputNeuron()).getNetValue();
+        for(DerivedLayer<? extends DerivedNeuron> layer : derivedLayers.subList(c.getOutputNeuron().getLayer().getLayerIndex(), derivedLayers.size())){
+            /// TODO: 24.08.2020  
+        }
+        return 0;
+    }
+    private double derivative(DerivedNeuron neuron){
         return 0;
     }
     private double getErrorT(double [] expected){

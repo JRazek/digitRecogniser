@@ -14,4 +14,9 @@ public abstract class DerivedLayer<T extends DerivedNeuron> extends Layer<T> {
             neuron.countActivation();
         }
     }
+    public void reset(){
+        for(T neuron : super.getNeurons()){
+            neuron.reset();
+        }
+    }
 }

@@ -14,12 +14,16 @@ public abstract class DerivedNeuron extends Neuron{
     public DerivedNeuron(Layer<? extends Neuron> layer, int number) {
         super(layer, number);
     }
-
+    public void reset(){
+        netValue = 0;
+        activationValue = 0;
+    }
     public void setBias(Bias bias) {
         this.bias = bias;
     }
 
     public void sumInputs() throws RuntimeErrorException{
+        netValue = 0;
         for(Connection conn : super.connections){
             if(conn.getOutputNeuron().equals(this)){
                 if(conn.getInputNeuron() instanceof DerivedNeuron){
@@ -42,6 +46,15 @@ public abstract class DerivedNeuron extends Neuron{
         if(activationValue >= 1 || activationValue < 0)
             throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!"));
     }
+
+    public double getNetValue() {
+        return netValue;
+    }
+
+    public Bias getBias() {
+        return bias;
+    }
+
     public double getActivationValue() {
         return activationValue;
     }
