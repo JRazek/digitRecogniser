@@ -7,6 +7,8 @@ import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 
 import javax.management.RuntimeErrorException;
 
+import static jrazek.neuralNetwork.utils.Utils.sigmoid;
+
 public abstract class DerivedNeuron extends Neuron{
     private double netValue;
     private double activationValue;
@@ -42,7 +44,7 @@ public abstract class DerivedNeuron extends Neuron{
         netValue += bias.getValue();
     }
     public void countActivation(){
-        activationValue = 1/(1+Math.pow(Math.E, -netValue));
+        activationValue = sigmoid(netValue);
         if(activationValue >= 1 || activationValue < 0)
             throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!"));
     }

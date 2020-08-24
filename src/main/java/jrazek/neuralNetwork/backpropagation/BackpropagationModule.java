@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
+import static jrazek.neuralNetwork.utils.Utils.sigmoid;
 
 public class BackpropagationModule {
     final private Net net;
@@ -46,13 +47,12 @@ public class BackpropagationModule {
     private double derivative(Connection c, double Error){
         Connection currentChecked = null;
         double x = c.getWeight();
-        double result = ((DerivedNeuron)c.getOutputNeuron()).getNetValue();
+        DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
+        double result = startingNeuron.getNetValue();
         for(DerivedLayer<? extends DerivedNeuron> layer : derivedLayers.subList(c.getOutputNeuron().getLayer().getLayerIndex(), derivedLayers.size())){
-            /// TODO: 24.08.2020  
+            result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());
+            // TODO: 25.08.2020 split
         }
-        return 0;
-    }
-    private double derivative(DerivedNeuron neuron){
         return 0;
     }
     private double getErrorT(double [] expected){
