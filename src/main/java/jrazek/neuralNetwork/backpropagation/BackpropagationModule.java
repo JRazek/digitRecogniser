@@ -1,7 +1,9 @@
 package jrazek.neuralNetwork.backpropagation;
 
+import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
+import jrazek.neuralNetwork.utils.Utils;
 
 import javax.management.RuntimeErrorException;
 
@@ -14,8 +16,10 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         double errorT = getErrorT(expected);
+        double g1 = getGradient();
     }
-    private double getGradient(){
+    private double getGradient(Connection c, double Error, Utils.Vector2D point){
+
         return 0;
     }
     private double getErrorT(double [] expected){
