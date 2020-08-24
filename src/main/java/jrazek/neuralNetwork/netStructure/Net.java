@@ -9,6 +9,7 @@ import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 
+import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +104,11 @@ public class Net {
             ((OutputLayer) l).showOutput();
         }
     }
-    public void backwardPropagate(double[] desiredValues){
 
+    public OutputLayer getOutputLayer() {
+        if(layers.get(layersNum-1) instanceof OutputLayer)
+            return (OutputLayer)layers.get(layersNum-1);
+        else
+            throw new RuntimeErrorException(new Error("2123 ERROR"));
     }
 }
