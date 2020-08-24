@@ -1,25 +1,34 @@
 package jrazek.neuralNetwork.backpropagation;
 
+import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
+import jrazek.neuralNetwork.utils.Utils;
 
 import javax.management.RuntimeErrorException;
 
 public class BackpropagationModule {
-    private Net net;
-    double errorT;
+    final private Net net;
     public BackpropagationModule(Net net) {
         this.net = net;
-        this.errorT = 0;
     }
-    public void backPropagate(double [] expected) throws RuntimeErrorException{
-        if(net.getOutputLayer().getNeurons().size() != expected.length)
-            throw new RuntimeErrorException(new Error("ERROR 2124"));
+    public void backPropagate(double [] expected) throws RuntimeErrorException {
+        if(expected.length != net.getOutputLayer().getNeurons().size())
+            throw new RuntimeErrorException(new Error("3123 ERROR"));
+        double errorT = getErrorT(expected);
+        double g1 = getGradient();
+    }
+    private double getGradient(Connection c, double Error, Utils.Vector2D point){
+
+        return 0;
+    }
+    private double getErrorT(double [] expected){
+        double sum = 0;
         int neuronNum = 0;
         for(OutputNeuron neuron : net.getOutputLayer().getNeurons()){
-            errorT += Math.pow(expected[neuronNum] - neuron.getActivationValue(), 2);
-            neuronNum ++;
+            sum += Math.pow(neuron.getActivationValue() - expected[neuronNum], 2);
+            neuronNum++;
         }
-        System.out.println(errorT);
+        return sum;
     }
 }
