@@ -48,7 +48,9 @@ public abstract class DerivedNeuron extends Neuron{
         if(activationValue >= 1 || activationValue < 0)
             throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!"));
     }
-
+    public double getTest(){
+        return 1;
+    }
     public double getNetValue() {
         return netValue;
     }

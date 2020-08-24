@@ -6,6 +6,7 @@ import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
+import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
@@ -48,12 +49,23 @@ public class BackpropagationModule {
         Connection currentChecked = null;
         double x = c.getWeight();
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
-        double result = startingNeuron.getNetValue();
-        for(DerivedLayer<? extends DerivedNeuron> layer : derivedLayers.subList(c.getOutputNeuron().getLayer().getLayerIndex(), derivedLayers.size())){
-            result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());
-            // TODO: 25.08.2020 split
+
+        double result;
+        result = startingNeuron.getNetValue();//1
+        result *= getChain(startingNeuron);
+        return result;
+    }
+    private double getChain(DerivedNeuron start){
+        double result = 1;
+        if(!(net.getLayers().get(start.getLayer().getLayerIndex()+1) instanceof DerivedLayer))
+            throw new RuntimeErrorException(new Error("2311"));
+        DerivedLayer<? extends DerivedNeuron> layer = (DerivedLayer<? extends DerivedNeuron>)net.getLayers().get(start.getLayer().getLayerIndex()+1);
+        result *= start.getActivationValue()*(1-start.getActivationValue());//2
+
+        for(DerivedNeuron n : layer.getNeurons()){
+            /// TODO: 25.08.2020 this xhit
         }
-        return 0;
+        return result;
     }
     private double getErrorT(double [] expected){
         double sum = 0;
