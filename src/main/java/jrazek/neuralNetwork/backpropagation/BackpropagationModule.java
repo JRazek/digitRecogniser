@@ -14,7 +14,9 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         double errorT = getErrorT(expected);
-        //todo
+    }
+    private double getGradient(){
+        return 0;
     }
     private double getErrorT(double [] expected){
         double sum = 0;
