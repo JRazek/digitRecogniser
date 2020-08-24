@@ -105,7 +105,7 @@ public class Net {
         }
     }
 
-    public OutputLayer getOutputLayer() {
+    public OutputLayer getOutputLayer() throws  RuntimeErrorException{
         if(layers.get(layersNum-1) instanceof OutputLayer)
             return (OutputLayer)layers.get(layersNum-1);
         else
