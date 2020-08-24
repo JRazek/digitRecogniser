@@ -20,10 +20,5 @@ public class OutputLayer extends DerivedLayer<OutputNeuron> {
             System.out.println(neuron.getActivationValue());
         }
     }
-    public void countError(){
-        for(DerivedNeuron n : super.getNeurons()){
-            ///
-        }
-    }
 
 }
