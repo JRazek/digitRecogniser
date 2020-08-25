@@ -19,9 +19,11 @@ import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 public class Net {
     private List<Layer<? extends Neuron>> layers;
     private List<Connection> connections;
+    private List<Bias> biases;
     public Net(){
         layers = new ArrayList<>();
         connections = new ArrayList<>();
+        biases = new ArrayList<>();
         initLayers();
         initNeurons();
         initBiases();
@@ -50,13 +52,17 @@ public class Net {
         }
     }
     private void initBiases(){
+        int biasID = 0;
         for(Layer<? extends Neuron> layer : layers.subList(1, layers.size())){
             if(layer instanceof DerivedLayer){
                 for(Neuron n : layer.getNeurons()){
                     if(n instanceof DerivedNeuron){
                         double randBiasVal = randomDouble(-1, 1);
                         /// TODO: 25.08.2020 change
-                        ((DerivedNeuron) n).setBias(new Bias(n, 0));
+                        Bias b = new Bias(n, biasID, randBiasVal);
+                        ((DerivedNeuron) n).setBias(b);
+                        biases.add(b);
+                        biasID ++;
                     }
                 }
             }
@@ -137,6 +143,10 @@ public class Net {
             return (OutputLayer)layers.get(layersNum-1);
         else
             throw new RuntimeErrorException(new Error("2123 ERROR"));
+    }
+
+    public List<Bias> getBiases() {
+        return biases;
     }
 
     public List<Connection> getConnections() {

@@ -4,11 +4,10 @@ import jrazek.neuralNetwork.abstracts.classes.layers.DerivedLayer;
 import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
 import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
+import jrazek.neuralNetwork.netStructure.Bias;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
-import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
-import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import javax.management.RuntimeErrorException;
@@ -18,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
-import static jrazek.neuralNetwork.utils.Utils.round;
-import static jrazek.neuralNetwork.utils.Utils.sigmoid;
 
 public class BackpropagationModule {
     final private Net net;
@@ -41,18 +38,26 @@ public class BackpropagationModule {
         this.errorT = getErrorT(expected);
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
-        Map<Connection, Double> gradient = new HashMap<>(net.getConnections().size());
+        Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
+        Map<Bias, Double> gradientBiases = new HashMap<>();
         for (Connection conn : net.getConnections()){
-            double delta = -gradientDescentRate*derivative(conn);
-            gradient.put(conn, delta);
+            double delta = -gradientDescentRate * derivativeWeight(conn);
+            gradientWeights.put(conn, delta);
         }
-        for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
-            ///System.out.println("old: " + entry.getKey().getWeight() + " new: " + entry.getValue());
+        for (Bias bias : net.getBiases()){
+            double delta = -gradientDescentRate * derivativeBias(bias);
+            gradientBiases.put(bias, delta);
+        }
+        for(Map.Entry<Connection, Double> entry : gradientWeights.entrySet()){
             entry.getKey().updateWeight(entry.getValue());
-            //weights should be updated after calculating all of the derivatives
+            //weights should be updated after calculating all of the derivatives and biases
+        }
+        for(Map.Entry<Bias, Double> entry : gradientBiases.entrySet()){
+            entry.getKey().updateBias(entry.getValue());
+            //biases should be updated after calculating all of the derivatives biases
         }
     }
-    private double derivative(Connection c){
+    private double derivativeWeight(Connection c){
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
         double result = 1;
 
@@ -62,6 +67,9 @@ public class BackpropagationModule {
             result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();//1
 
         return result * getChain(startingNeuron);
+    }
+    private double derivativeBias(Bias b){
+        return getChain((DerivedNeuron)b.getNeuron());
     }
     private double getChain(DerivedNeuron start){
         double chain = 1;
