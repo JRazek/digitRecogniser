@@ -64,8 +64,8 @@ public class Net {
     }
     private void initConnections(){
         int layerNum = 0;
+        int connNum = 0;
         for(Layer<? extends Neuron> layer : layers){
-            int connNum = 0;
             for(Neuron catcher : layer.getNeurons()){
                 for(Neuron caught : layers.get(layerNum + 1).getNeurons()){
                     Connection conn = new Connection(catcher, caught,connNum);
@@ -120,8 +120,10 @@ public class Net {
             System.out.println(currentLayer.getLayerIndex() + " neurons: " + currentLayer.getNeurons());
         }
     }
-    public void showConnections(int layerNum, int neuronNum){
-
+    public void showConnections(){
+        for(Connection conn : connections){
+            System.out.println(conn.getInputNeuron() + " --" + conn.getId() + "--> " + conn.getOutputNeuron());
+        }
     }
     public void showOutput(){
         Layer<? extends Neuron> l = layers.get(layersNum - 1);

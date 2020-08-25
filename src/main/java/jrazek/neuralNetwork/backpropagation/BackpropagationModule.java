@@ -61,10 +61,13 @@ public class BackpropagationModule {
         else if(c.getInputNeuron() instanceof DerivedNeuron)
             result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();//1
 
-        result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());
         result *= getChain(startingNeuron);
         if(c.getId() == 4){
             System.out.println("chain value = " + result);
+
+            System.out.println("out(L-1) = " + ((DerivedNeuron) c.getInputNeuron()).getActivationValue());
+            System.out.println("net = " + ((DerivedNeuron) c.getOutputNeuron()).getNetValue());
+            System.out.println("out = " + ((DerivedNeuron) c.getOutputNeuron()).getActivationValue());
         }
         return result;
     }
@@ -74,9 +77,11 @@ public class BackpropagationModule {
             chain *= 2*start.getActivationValue()*(start.getActivationValue() - expected[start.getIndexInLayer()]);
         }
         else{
+            chain *= start.getActivationValue()*(1-start.getActivationValue());
             List<Connection> connections = start.getOutPutConnections();
             for(Connection c : connections){
-                chain *= c.getWeight() * getChain((DerivedNeuron)c.getOutputNeuron());
+                chain *= c.getWeight();
+                //chain *= c.getWeight() * getChain((DerivedNeuron)c.getOutputNeuron());
             }
             /// TODO: 25.08.2020 split
         }
@@ -93,5 +98,15 @@ public class BackpropagationModule {
     }
     public double showError(){
         return errorT;
+    }
+    public double test(){
+        Connection c = null;
+        for(Connection co : net.getConnections()){
+            if(co.getId() == 4)
+                c = co;
+        }
+        DerivedNeuron in = ((DerivedNeuron)c.getInputNeuron());
+        DerivedNeuron out = ((DerivedNeuron)c.getOutputNeuron());
+        return 2*in.getActivationValue()*out.getActivationValue()*(1-out.getActivationValue())*(0.01-out.getActivationValue());
     }
 }
