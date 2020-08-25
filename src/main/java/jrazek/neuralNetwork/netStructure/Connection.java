@@ -48,7 +48,7 @@ public class Connection {
         return inputNeuron;
     }
     public void updateWeight(double delta){
-        this.weight += weight;
+        this.weight += delta;
     }
     public Neuron getOutputNeuron() {
         return outputNeuron;

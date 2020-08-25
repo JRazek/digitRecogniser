@@ -61,26 +61,18 @@ public class BackpropagationModule {
         else if(c.getInputNeuron() instanceof DerivedNeuron)
             result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();//1
 
-        result *= getChain(startingNeuron);
-        if(c.getId() == 4){
-            System.out.println("chain value = " + result);
-            System.out.println("out(L-1) = " + ((DerivedNeuron) c.getInputNeuron()).getActivationValue());
-            System.out.println("net = " + ((DerivedNeuron) c.getOutputNeuron()).getNetValue());
-            System.out.println("out = " + ((DerivedNeuron) c.getOutputNeuron()).getActivationValue());
-        }
-        return result;
+        return result * getChain(startingNeuron);
     }
     private double getChain(DerivedNeuron start){
         double chain = 1;
-        if(start.getLayer() instanceof OutputLayer){
-            chain *= 2*start.getActivationValue()*(start.getActivationValue() - expected[start.getIndexInLayer()]);
+        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L)
+        if(start instanceof OutputNeuron){
+            chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();
         }
-        else{
-            chain *= start.getActivationValue()*(1-start.getActivationValue());
-            List<Connection> connections = start.getOutPutConnections();
-            for(Connection c : connections){
-                //chain *= c.getWeight();
-                chain *= c.getWeight() * getChain((DerivedNeuron)c.getOutputNeuron());
+        else {
+            for (Connection c : start.getOutPutConnections()) {
+                chain *= c.getWeight();//z(L) wrt a(L-1) (just w)
+                chain *= getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
             }
         }
         return chain;
@@ -100,11 +92,19 @@ public class BackpropagationModule {
     public double test(){
         Connection c = null;
         for(Connection co : net.getConnections()){
-            if(co.getId() == 4)
+            if(co.getId() == 4)//static value.
                 c = co;
         }
-        DerivedNeuron in = ((DerivedNeuron)c.getInputNeuron());
-        DerivedNeuron out = ((DerivedNeuron)c.getOutputNeuron());
+        if(c == null)
+            return 0;
+        DerivedNeuron in;
+        DerivedNeuron out;
+        if(c.getInputNeuron() == null || c.getOutputNeuron() == null)
+            return 0;
+        if(!(c.getInputNeuron() instanceof DerivedNeuron && c.getOutputNeuron() instanceof DerivedNeuron))
+            return 0;
+        in = ((DerivedNeuron)c.getInputNeuron());
+        out = ((DerivedNeuron)c.getOutputNeuron());
         return 2*in.getActivationValue()*out.getActivationValue()*(1-out.getActivationValue())*(0.99-out.getActivationValue());
     }
 }
