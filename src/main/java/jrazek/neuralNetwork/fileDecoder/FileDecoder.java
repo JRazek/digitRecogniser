@@ -26,6 +26,8 @@ public class FileDecoder {
     }
     public HandWrittenNumber getNextImage(){
        readNext().split(",");
+       //filename,original filename,scanid,digit,database name original,contributing team,database name
+        //a00000.png,Scan_58_digit_5_num_8.png,58,5,BHDDB,Buet_Broncos,training-a
         return null;
     }
 }
