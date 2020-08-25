@@ -4,7 +4,9 @@ import jrazek.neuralNetwork.backpropagation.BackpropagationModule;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Rules;
 
+import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 import static jrazek.neuralNetwork.utils.Rules.showErrorEveryIteration;
+import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,9 +16,14 @@ public class Main {
         double e2 = 0;
         //Double [] weights = {0.1, 0.1, 0.1, 0.1, 0.3, 0.1, 0.1, 0.1};
         //net.setWeights(weights);
+        double [] input = new double[inputNeurons];
+        for(int i = 0; i < inputNeurons; i ++){
+            input[i] = randomDouble(0,0.9);
+        }
         for(int i = 0; i < Rules.iterations; i++){
-            net.forwardPass(new double[]{1d, 2d, 1d,5d,1d,1d,1d,2d,3d,5d});
-            backpropagationModule.backPropagate(new double[]{0.01, 0.02, 0.03, 0.99, 0.06, 0.40,0.1, 0.4});
+            net.forwardPass(input);
+            //System.out.println( net.getConnections().get(4).getWeight());
+            backpropagationModule.backPropagate(new double[]{0.01, 0.02, 0.03, 0.99, 0.06, 0.40,0.1, 0.4, 0.1, 0.8});
             if(showErrorEveryIteration)
                 System.out.println("Error " + i + " = " + backpropagationModule.showError());
             if(i == 0)
