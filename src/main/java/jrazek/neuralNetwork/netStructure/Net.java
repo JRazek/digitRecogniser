@@ -55,7 +55,7 @@ public class Net {
                 for(Neuron n : layer.getNeurons()){
                     if(n instanceof DerivedNeuron){
                         double randBiasVal = randomDouble(-10, 10);
-                        ((DerivedNeuron) n).setBias(new Bias(n, randBiasVal));
+                        ((DerivedNeuron) n).setBias(new Bias(n, 0));
                     }
                 }
             }

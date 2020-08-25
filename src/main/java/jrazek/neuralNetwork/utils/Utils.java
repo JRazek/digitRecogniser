@@ -46,6 +46,11 @@ public class Utils {
     public static double sigmoid(double x){
         return 1/(1+Math.pow(Math.E, -x));
     }
+    public static double round(double num, int n) {
+        num *= Math.pow(10, n);
+        num = Math.round(num);
+        return num / Math.pow(10, n);
+    }
     public static boolean randomBoolean(){
         Random rand = new Random();
         return rand.nextBoolean();

@@ -17,11 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
+import static jrazek.neuralNetwork.utils.Utils.round;
 import static jrazek.neuralNetwork.utils.Utils.sigmoid;
 
 public class BackpropagationModule {
     final private Net net;
     final private List<DerivedLayer<? extends DerivedNeuron>> derivedLayers;
+    double errorT;
+    double [] expected;
     public BackpropagationModule(Net net) {
         this.net = net;
         this.derivedLayers = new ArrayList<>();
@@ -32,38 +35,60 @@ public class BackpropagationModule {
             }
         }
     }
-    public void backPropagate(double [] expected) throws RuntimeErrorException {
+    public void backPropagate(double [] exp) throws RuntimeErrorException {
+        this.expected = exp;
+        this.errorT = getErrorT(expected);
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         double errorT = getErrorT(expected);
         Map<Connection, Double> gradient = new HashMap<>(net.getConnections().size());
         for (Connection conn : net.getConnections()){
-            gradient.put(conn, -gradientDescentRate*derivative(conn, errorT));
+            gradient.put(conn, -gradientDescentRate*derivative(conn));
         }
         for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
+            System.out.println("old: " + round(entry.getKey().getWeight(), 5) + " new: " + round(entry.getValue(), 5));
             entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives
         }
     }
-    private double derivative(Connection c, double Error){
-        Connection currentChecked = null;
-        double x = c.getWeight();
+    private double derivative(Connection c){
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
 
         double result;
         result = startingNeuron.getNetValue();//1
+        result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());//2
         result *= getChain(startingNeuron);
         return result;
     }
     private double getChain(DerivedNeuron start){
         double result = 1;
-        if(!(net.getLayers().get(start.getLayer().getLayerIndex()+1) instanceof DerivedLayer))
-            throw new RuntimeErrorException(new Error("2311"));
-        DerivedLayer<? extends DerivedNeuron> layer = (DerivedLayer<? extends DerivedNeuron>)net.getLayers().get(start.getLayer().getLayerIndex()+1);
-        result *= start.getActivationValue()*(1-start.getActivationValue());//2
 
-        for(DerivedNeuron n : layer.getNeurons()){
-            /// TODO: 25.08.2020 this xhit
+        //in hidden layer
+        for(Connection conn : start.getOutPutConnections()){
+            result *= conn.getWeight() * getChain((DerivedNeuron)conn.getOutputNeuron());
+        }
+
+        //in the final layer
+        int go = 0;
+        if(net.getLayers().get(start.getLayer().getLayerIndex()) instanceof OutputLayer)
+            go = 2;
+        else if(net.getLayers().get(start.getLayer().getLayerIndex() + 1) instanceof OutputLayer)
+            go = 1;
+        if(go != 0){
+            Layer<?extends Neuron> l;
+            if(go == 1){
+                l = net.getLayers().get(start.getLayer().getLayerIndex() + 1);
+            }else{
+                l = net.getLayers().get(start.getLayer().getLayerIndex());
+            }
+            for(Neuron n : l.getNeurons()){
+                if(n instanceof OutputNeuron){
+                    double T = expected[n.getIndexInLayer()];
+                    double a = ((OutputNeuron) n).getActivationValue();
+                    result *= -2*(T-a)*a;
+                }
+            }
+            return result;
         }
         return result;
     }

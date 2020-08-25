@@ -7,6 +7,9 @@ import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 
 import javax.management.RuntimeErrorException;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static jrazek.neuralNetwork.utils.Utils.sigmoid;
 
 public abstract class DerivedNeuron extends Neuron{
@@ -46,7 +49,7 @@ public abstract class DerivedNeuron extends Neuron{
     public void countActivation(){
         activationValue = sigmoid(netValue);
         if(activationValue >= 1 || activationValue < 0)
-            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!"));
+            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!" + netValue));
     }
     public double getTest(){
         return 1;
@@ -59,6 +62,14 @@ public abstract class DerivedNeuron extends Neuron{
         return bias;
     }
 
+    public List<Connection> getOutPutConnections(){
+        List<Connection> derived = new LinkedList<>();
+        for(Connection conn : super.getConnections()){
+            if(conn.getInputNeuron().equals(this))
+                derived.add(conn);
+        }
+        return derived;
+    }
     public double getActivationValue() {
         return activationValue;
     }

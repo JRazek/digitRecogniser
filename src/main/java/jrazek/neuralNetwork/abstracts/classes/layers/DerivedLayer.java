@@ -2,6 +2,9 @@ package jrazek.neuralNetwork.abstracts.classes.layers;
 
 
 import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
+import jrazek.neuralNetwork.netStructure.Connection;
+
+import java.util.List;
 
 public abstract class DerivedLayer<T extends DerivedNeuron> extends Layer<T> {
     public DerivedLayer(int index) {

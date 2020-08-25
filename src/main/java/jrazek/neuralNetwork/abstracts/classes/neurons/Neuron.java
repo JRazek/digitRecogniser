@@ -9,13 +9,18 @@ import java.util.List;
 
 public abstract class Neuron{
     private Layer<? extends Neuron> layer;
-    private int number; //number from top and 0 in layer
+    private int index; //number from top and 0 in layer
     protected List<Connection> connections;
     public Neuron(Layer<? extends Neuron> layer, int num){
         this.layer = layer;
         connections = new ArrayList<>();
-        number = num;
+        index = num;
     }
+
+    public int getIndexInLayer() {
+        return index;
+    }
+
     public Layer<? extends Neuron> getLayer() {
         return layer;
     }
