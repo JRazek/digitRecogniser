@@ -16,7 +16,6 @@ public class Main {
         //net.setWeights(weights);
         for(int i = 0; i < Rules.iterations; i++){
             net.forwardPass(new double[]{1d, 2d, 1d,5d,1d,1d,1d,2d,3d,5d});
-            //System.out.println( net.getConnections().get(4).getWeight());
             backpropagationModule.backPropagate(new double[]{0.01, 0.02, 0.03, 0.99, 0.06, 0.40,0.1, 0.4});
             if(showErrorEveryIteration)
                 System.out.println("Error " + i + " = " + backpropagationModule.showError());
