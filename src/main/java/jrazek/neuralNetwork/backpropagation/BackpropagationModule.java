@@ -44,7 +44,7 @@ public class BackpropagationModule {
         for (Connection conn : net.getConnections()){
             double delta = -gradientDescentRate*derivative(conn);
             System.out.println("delta: " + delta);
-            gradient.put(conn, -gradientDescentRate*derivative(conn));
+            gradient.put(conn, delta);
         }
         for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
             System.out.println("old: " + entry.getKey().getWeight() + " new: " + entry.getValue());
@@ -103,5 +103,8 @@ public class BackpropagationModule {
             neuronNum++;
         }
         return sum;
+    }
+    public double showError(){
+        return errorT;
     }
 }
