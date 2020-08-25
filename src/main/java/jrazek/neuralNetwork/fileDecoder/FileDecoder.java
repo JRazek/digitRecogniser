@@ -17,11 +17,15 @@ public class FileDecoder {
         return (digits.size() - 1 != lineNum);
     }
     private String readNext(){
-        if(digits.get(lineNum) != null)
+        if(digits.get(lineNum) != null){
+            lineNum ++;
             return digits.get(lineNum);
+        }
+
         return null;
     }
     public HandWrittenNumber getNextImage(){
-        return currImgObj;
+       readNext().split(",");
+        return null;
     }
 }
