@@ -40,6 +40,9 @@ public class BackpropagationModule {
             throw new RuntimeErrorException(new Error("3123 ERROR"));
         Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
         Map<Bias, Double> gradientBiases = new HashMap<>();
+
+        /// TODO: 25.08.2020 averaging gradients
+
         for (Connection conn : net.getConnections()){
             double delta = -gradientDescentRate * derivativeWeight(conn);
             gradientWeights.put(conn, delta);
