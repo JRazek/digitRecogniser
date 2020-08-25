@@ -7,6 +7,7 @@ import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
+import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
@@ -54,46 +55,26 @@ public class BackpropagationModule {
     }
     private double derivative(Connection c){
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
+        double result = 1;
 
-        double result;
-        result = startingNeuron.getNetValue();//1
-        result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());//2
+        if(c.getInputNeuron() instanceof InputNeuron)
+            result = ((InputNeuron) c.getInputNeuron()).getOutput();//1
+        else if(c.getInputNeuron() instanceof DerivedNeuron)
+            result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();//1
+
+        result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());
         result *= getChain(startingNeuron);
         return result;
     }
     private double getChain(DerivedNeuron start){
-        double result = 1;
-
-        //in hidden layer
-        double tmp = 1;
-        for(Connection conn : start.getOutPutConnections()){
-            tmp += conn.getWeight() * getChain((DerivedNeuron)conn.getOutputNeuron());
+        double chain = 1;
+        if(start.getLayer() instanceof OutputLayer){
+            chain *= 2*start.getActivationValue()*(start.getActivationValue() - expected[start.getIndexInLayer()]);
         }
-        result *= tmp;
-
-        //in the final layer
-        int go = 0;
-        if(net.getLayers().get(start.getLayer().getLayerIndex()) instanceof OutputLayer)
-            go = 2;
-        else if(net.getLayers().get(start.getLayer().getLayerIndex() + 1) instanceof OutputLayer)
-            go = 1;
-        if(go != 0){
-            Layer<?extends Neuron> l;
-            if(go == 1){
-                l = net.getLayers().get(start.getLayer().getLayerIndex() + 1);
-            }else{
-                l = net.getLayers().get(start.getLayer().getLayerIndex());
-            }
-            for(Neuron n : l.getNeurons()){
-                if(n instanceof OutputNeuron){
-                    double T = expected[n.getIndexInLayer()];
-                    double a = ((OutputNeuron) n).getActivationValue();
-                    result *= -2*(T-a)*a;
-                }
-            }
-            return result;
+        else{
+            /// TODO: 25.08.2020 split
         }
-        return result;
+        return chain;
     }
     private double getErrorT(double [] expected){
         double sum = 0;
