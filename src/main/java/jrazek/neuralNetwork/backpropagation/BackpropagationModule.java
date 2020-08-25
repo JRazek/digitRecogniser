@@ -44,11 +44,10 @@ public class BackpropagationModule {
         Map<Connection, Double> gradient = new HashMap<>(net.getConnections().size());
         for (Connection conn : net.getConnections()){
             double delta = -gradientDescentRate*derivative(conn);
-            System.out.println("delta: " + delta);
             gradient.put(conn, delta);
         }
         for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
-            System.out.println("old: " + entry.getKey().getWeight() + " new: " + entry.getValue());
+            ///System.out.println("old: " + entry.getKey().getWeight() + " new: " + entry.getValue());
             entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives
         }
@@ -64,6 +63,9 @@ public class BackpropagationModule {
 
         result *= startingNeuron.getActivationValue()*(1-startingNeuron.getActivationValue());
         result *= getChain(startingNeuron);
+        if(c.getId() == 4){
+            System.out.println("chain value = " + result);
+        }
         return result;
     }
     private double getChain(DerivedNeuron start){
@@ -72,6 +74,10 @@ public class BackpropagationModule {
             chain *= 2*start.getActivationValue()*(start.getActivationValue() - expected[start.getIndexInLayer()]);
         }
         else{
+            List<Connection> connections = start.getOutPutConnections();
+            for(Connection c : connections){
+                chain *= c.getWeight() * getChain((DerivedNeuron)c.getOutputNeuron());
+            }
             /// TODO: 25.08.2020 split
         }
         return chain;

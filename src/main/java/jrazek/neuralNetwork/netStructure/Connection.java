@@ -10,10 +10,12 @@ public class Connection {
     private double weight;
     private final Neuron inputNeuron;
     private final Neuron outputNeuron;
-    public Connection(Neuron input, Neuron output) throws RuntimeErrorException {
+    private final int id;
+    public Connection(Neuron input, Neuron output, int id) throws RuntimeErrorException {
         this.weight = randomDouble(-1,1);
         this.inputNeuron = input;
         this.outputNeuron = output;
+        this.id = id;
 
         if(input == null || output == null){
             throw new RuntimeErrorException(new Error("CONNECTION IS INITIATED THE WRONG WAY!"));
@@ -30,8 +32,16 @@ public class Connection {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
     public double getWeight() {
         return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public Neuron getInputNeuron() {

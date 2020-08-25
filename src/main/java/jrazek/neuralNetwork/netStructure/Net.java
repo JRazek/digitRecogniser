@@ -65,13 +65,14 @@ public class Net {
     private void initConnections(){
         int layerNum = 0;
         for(Layer<? extends Neuron> layer : layers){
-
+            int connNum = 0;
             for(Neuron catcher : layer.getNeurons()){
                 for(Neuron caught : layers.get(layerNum + 1).getNeurons()){
-                    Connection conn = new Connection(catcher, caught);
+                    Connection conn = new Connection(catcher, caught,connNum);
                     catcher.addConnection(conn);
                     caught.addConnection(conn);
                     connections.add(0, conn);//just the reverse waay
+                    connNum++;
                 }
             }
 
@@ -81,6 +82,17 @@ public class Net {
             }
         }
     }
+
+    public void setWeights(Double[] w) throws RuntimeErrorException{
+        if(w.length != connections.size())
+            throw new RuntimeErrorException(new Error("sffsdf"));
+        int wNum = 0;
+        for(Double d : w){
+            connections.get(wNum).setWeight(d);
+            wNum ++;
+        }
+    }
+
     public void forwardPass(double[] argsArr)throws RuntimeException{
         reset();
         if(argsArr.length != inputNeurons)
