@@ -9,8 +9,6 @@ public class FileDecoder {
     private String navigationFile = "dataSet/training-a.csv";
     private String datasetFolder = "dataSet/training-a/";
     List<String> digits;
-    BufferedImage currentImg;
-    HandWrittenNumber currImgObj;
     int lineNum = 0;
     public FileDecoder(){
         digits = FileReader.readTextFile(navigationFile);
@@ -26,13 +24,13 @@ public class FileDecoder {
 
         return null;
     }
-    public HandWrittenNumber getNextImage() throws IOException {
+    public HandWrittenNumber getNextImage() {
         try {
             String [] data = Objects.requireNonNull(readNext()).split(",");
             BufferedImage img = FileReader.readImageFile(datasetFolder + data[0]);
             int digit = Integer.parseInt(data[3]);
             return new HandWrittenNumber(img, digit);
-        }catch (NumberFormatException e){
+        }catch (NumberFormatException | IOException e){
             e.printStackTrace();
         }
 

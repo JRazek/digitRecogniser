@@ -6,18 +6,22 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
 public class HandWrittenNumber {
-    float [][] pixels;
+    double [] pixels;
     int number;
     HandWrittenNumber(BufferedImage img, int number){
         this.number = number;
         int x = img.getWidth();
         int y = img.getHeight();
-        pixels = new float[x][y];
+        pixels = new double[x*y];
         for(int i = 0; i < y; i ++){
             for(int j = 0; j < x; j++){
-                pixels[j][i] = (Utils.toGrayscale(img.getRGB(j, i))/255f);
+                pixels[j+i*x] = (Utils.toGrayscale(img.getRGB(j, i))/255f);
             }
         }
         /// TODO: 25.08.2020 imageNormalization
+    }
+
+    public double[] getPixels() {
+        return pixels;
     }
 }
