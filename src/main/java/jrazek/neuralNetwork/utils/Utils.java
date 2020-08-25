@@ -1,4 +1,6 @@
 package jrazek.neuralNetwork.utils;
+import org.w3c.dom.css.RGBColor;
+
 import javax.management.RuntimeErrorException;
 import java.util.Random;
 
@@ -51,6 +53,15 @@ public class Utils {
         double c = (1d/(1d+Math.pow(Math.E, -x)));
         //System.out.println("sigmoid: " + c);
         return c;
+    }
+    public static float toGrayscale(int p){
+
+        int a = (p>>24)&0xff;
+        int r = (p>>16)&0xff;
+        int g = (p>>8)&0xff;
+        int b = p&0xff;
+
+        return (0.3f * r) + (0.59f * g) + (0.11f * b);
     }
     public static double round(double num, int n) {
         num *= Math.pow(10, n);
