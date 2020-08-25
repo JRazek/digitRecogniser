@@ -49,7 +49,7 @@ public abstract class DerivedNeuron extends Neuron{
     public void countActivation(){
         activationValue = sigmoid(netValue);
         if(activationValue >= 1 || activationValue < 0)
-            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!" + netValue));
+            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!" + activationValue));
     }
     public double getTest(){
         return 1;

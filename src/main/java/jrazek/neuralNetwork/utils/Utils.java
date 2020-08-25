@@ -26,7 +26,11 @@ public class Utils {
         }
     }
     public static double randomDouble(){
-        return randomDouble(Double.MIN_VALUE, Double.MAX_VALUE);
+        Random r = new Random();
+        int m = 1;
+        if(randomBoolean())
+            m = -1;
+        return r.nextDouble()*m;
     }
     public static double randomDouble(double min, double max){
         Random r = new Random();
@@ -44,7 +48,9 @@ public class Utils {
         return rand.nextInt((max - min) + 1) + min;
     }
     public static double sigmoid(double x){
-        return 1/(1+Math.pow(Math.E, -x));
+        double c = (1d/(1d+Math.pow(Math.E, -x)));
+        //System.out.println("sigmoid: " + c);
+        return c;
     }
     public static double round(double num, int n) {
         num *= Math.pow(10, n);

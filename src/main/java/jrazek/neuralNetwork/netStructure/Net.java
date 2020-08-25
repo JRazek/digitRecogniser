@@ -54,7 +54,8 @@ public class Net {
             if(layer instanceof DerivedLayer){
                 for(Neuron n : layer.getNeurons()){
                     if(n instanceof DerivedNeuron){
-                        double randBiasVal = randomDouble(-10, 10);
+                        double randBiasVal = randomDouble(-1, 1);
+                        /// TODO: 25.08.2020 change
                         ((DerivedNeuron) n).setBias(new Bias(n, 0));
                     }
                 }
@@ -70,7 +71,7 @@ public class Net {
                     Connection conn = new Connection(catcher, caught);
                     catcher.addConnection(conn);
                     caught.addConnection(conn);
-                    connections.add(0, conn);
+                    connections.add(0, conn);//just the reverse waay
                 }
             }
 

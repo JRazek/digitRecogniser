@@ -40,13 +40,14 @@ public class BackpropagationModule {
         this.errorT = getErrorT(expected);
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
-        double errorT = getErrorT(expected);
         Map<Connection, Double> gradient = new HashMap<>(net.getConnections().size());
         for (Connection conn : net.getConnections()){
+            double delta = -gradientDescentRate*derivative(conn);
+            System.out.println("delta: " + delta);
             gradient.put(conn, -gradientDescentRate*derivative(conn));
         }
         for(Map.Entry<Connection, Double> entry : gradient.entrySet()){
-            System.out.println("old: " + round(entry.getKey().getWeight(), 5) + " new: " + round(entry.getValue(), 5));
+            System.out.println("old: " + entry.getKey().getWeight() + " new: " + entry.getValue());
             entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives
         }
@@ -64,9 +65,11 @@ public class BackpropagationModule {
         double result = 1;
 
         //in hidden layer
+        double tmp = 1;
         for(Connection conn : start.getOutPutConnections()){
-            result *= conn.getWeight() * getChain((DerivedNeuron)conn.getOutputNeuron());
+            tmp += conn.getWeight() * getChain((DerivedNeuron)conn.getOutputNeuron());
         }
+        result *= tmp;
 
         //in the final layer
         int go = 0;
