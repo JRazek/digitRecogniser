@@ -11,26 +11,31 @@ import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
 import javax.management.RuntimeErrorException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
+import static jrazek.neuralNetwork.utils.Rules.updateRateAverage;
 
 public class BackpropagationModule {
     final private Net net;
     final private List<DerivedLayer<? extends DerivedNeuron>> derivedLayers;
-    double errorT;
-    double [] expected;
+    Map<Connection, List<Double>> gradientWeights = new HashMap<>();
+  //  Map<Bias, Double> gradientBiases =
+    private double errorT;
+    private double [] expected;
+    private int iteration;
     public BackpropagationModule(Net net) {
         this.net = net;
         this.derivedLayers = new ArrayList<>();
+        this.iteration = 0;
         List<Layer<? extends Neuron>> layers = net.getLayers().subList(1, net.getLayers().size());
         for(Layer<? extends Neuron> layer : layers){
             if(layer instanceof DerivedLayer){
                 derivedLayers.add((DerivedLayer<?extends DerivedNeuron>)layer);
             }
+        }
+        for(Connection c : net.getConnections()){
+            gradientWeights.put(c, new LinkedList<>());
         }
     }
     public void backPropagate(double [] exp) throws RuntimeErrorException {
@@ -38,27 +43,42 @@ public class BackpropagationModule {
         this.errorT = getErrorT(expected);
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
-        Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
-        Map<Bias, Double> gradientBiases = new HashMap<>();
+       // Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
+        Map<Bias, Double> gradientBiases = new HashMap<>(net.getBiases().size());
 
         /// TODO: 25.08.2020 averaging gradients
 
         for (Connection conn : net.getConnections()){
             double delta = -gradientDescentRate * derivativeWeight(conn);
-            gradientWeights.put(conn, delta);
+            gradientWeights.get(conn).add(delta);
         }
         for (Bias bias : net.getBiases()){
             double delta = -gradientDescentRate * derivativeBias(bias);
             gradientBiases.put(bias, delta);
         }
-        for(Map.Entry<Connection, Double> entry : gradientWeights.entrySet()){
-            entry.getKey().updateWeight(entry.getValue());
+        if(iteration != 0 && iteration % updateRateAverage == 0){
+            calculateAverageGradient();
+        }
+        iteration ++;
+    }
+    private void calculateAverageGradient(){
+
+        for(Map.Entry<Connection, List<Double>> entry : gradientWeights.entrySet()){
+            double sum = 0;
+            for(Double d : entry.getValue()){
+                sum += d;
+            }
+            sum /= entry.getValue().size();
+            entry.getKey().updateWeight(sum);
+            entry.getValue().clear();
+            //entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives and biases
         }
-        for(Map.Entry<Bias, Double> entry : gradientBiases.entrySet()){
+       /* for(Map.Entry<Bias, Double> entry : gradientBiases.entrySet()){
             entry.getKey().updateBias(entry.getValue());
             //biases should be updated after calculating all of the derivatives biases
-        }
+        }*/
+        //todo remember to clear List after calculation
     }
     private double derivativeWeight(Connection c){
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
