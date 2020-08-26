@@ -14,7 +14,6 @@ public class FileDecoder {
     private int lineNum = 0;
     public FileDecoder(){
         digits = FileReader.readTextFile(navigationFile);
-        inputNeurons = digits.size();
     }
     private boolean hasNextImg(){
         return (digits.size() - 1 != lineNum);

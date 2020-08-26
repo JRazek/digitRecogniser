@@ -101,7 +101,7 @@ public class Net {
     public void forwardPass(double[] argsArr)throws RuntimeException{
         reset();
         if(argsArr.length != inputNeurons)
-            throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!" + argsArr.length));
+            throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!" + argsArr.length + " =/= " + inputNeurons));
         if(layers.get(0) instanceof FeedableLayer){
             ((FeedableLayer) layers.get(0)).feed(argsArr);
         }
