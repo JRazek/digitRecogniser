@@ -39,6 +39,9 @@ public class Main {
                         System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
                         accuracy.reset();
                     }
+                    if((iteration + 1) % saveRate == 0){
+                        StructureManager.save(net);
+                    }
                 }
                 StructureManager.save(net);
                 fileDecoder.reset();

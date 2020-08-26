@@ -52,7 +52,7 @@ public class Utils {
         return rand.nextInt((max - min) + 1) + min;
     }
     public static double sigmoid(double x) throws RuntimeErrorException{
-        double c = (1d/(1d+Math.pow(Math.E, -(x/sigmoidDivider))));
+        double c = (1d/(1d+Math.exp(-(x/sigmoidDivider))));
         if(c >= 1 || c < 0)
             throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!" + c + " from " + x));
         //System.out.println("sigmoid: " + c);

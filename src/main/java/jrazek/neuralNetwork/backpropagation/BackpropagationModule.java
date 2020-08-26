@@ -109,7 +109,7 @@ public class BackpropagationModule {
             chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();
         }
         else {
-            double tmp = 1;
+            double tmp = 0;
             for (Connection c : start.getOutPutConnections()) {
                 chain *= c.getWeight();//z(L) wrt a(L-1) (just w)
                 tmp += getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
