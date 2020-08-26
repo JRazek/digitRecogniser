@@ -29,6 +29,9 @@ public class FileDecoder {
     public boolean hasNext(){
         return (lineNum + 1 != digits.size());
     }
+    public void reset(){
+        lineNum = 0;
+    }
     public HandWrittenNumber getNextImage() {
         try {
             String [] data = Objects.requireNonNull(readNext()).split(",");
