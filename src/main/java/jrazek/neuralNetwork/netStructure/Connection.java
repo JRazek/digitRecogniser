@@ -12,7 +12,7 @@ public class Connection {
     private final Neuron outputNeuron;
     private final int id;
     public Connection(Neuron input, Neuron output, int id) throws RuntimeErrorException {
-        this.weight = randomDouble(-1,1);
+        this.weight = randomDouble(0,1);
         this.inputNeuron = input;
         this.outputNeuron = output;
         this.id = id;

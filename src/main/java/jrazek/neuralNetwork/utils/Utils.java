@@ -4,6 +4,8 @@ import org.w3c.dom.css.RGBColor;
 import javax.management.RuntimeErrorException;
 import java.util.Random;
 
+import static jrazek.neuralNetwork.utils.Rules.sigmoidDivider;
+
 public class Utils {
     public static class Vector2D{
         private double x, y;
@@ -50,7 +52,9 @@ public class Utils {
         return rand.nextInt((max - min) + 1) + min;
     }
     public static double sigmoid(double x){
-        double c = (1d/(1d+Math.pow(Math.E, -x)));
+        double c = (1d/(1d+Math.pow(Math.E, -(x/sigmoidDivider))));
+        if(c >= 1 || c < 0)
+            throw new RuntimeErrorException(new Error("INVALID ACTIVATION VALUE!" + c + " from " + x));
         //System.out.println("sigmoid: " + c);
         return c;
     }

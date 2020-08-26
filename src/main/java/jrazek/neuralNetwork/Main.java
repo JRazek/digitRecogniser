@@ -2,6 +2,7 @@ package jrazek.neuralNetwork;
 
 import jrazek.neuralNetwork.backpropagation.BackpropagationModule;
 import jrazek.neuralNetwork.fileDecoder.FileDecoder;
+import jrazek.neuralNetwork.fileDecoder.HandWrittenNumber;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Rules;
 
@@ -19,9 +20,11 @@ public class Main {
         //Double [] weights = {0.1, 0.1, 0.1, 0.1, 0.3, 0.1, 0.1, 0.1};
         //net.setWeights(weights);
         for(int i = 0; i < Rules.iterations; i++){
-            net.forwardPass(fileDecoder.getNextImage().getPixels());
-            //System.out.println( net.getConnections().get(4).getWeight());
-            backpropagationModule.backPropagate(new double[]{0.01, 0.02, 0.03, 0.99, 0.06, 0.40,0.1, 0.4, 0.1, 0.8});
+            HandWrittenNumber num = fileDecoder.getNextImage();
+            net.forwardPass(num.getPixels());
+            double [] target = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            target[num.getTarget()] = 0.99;
+            backpropagationModule.backPropagate(target);
             if(showErrorEveryIteration)
                 System.out.println("Error " + i + " = " + backpropagationModule.showError());
             if(i == 0)

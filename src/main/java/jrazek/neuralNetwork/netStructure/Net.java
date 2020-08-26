@@ -57,7 +57,7 @@ public class Net {
             if(layer instanceof DerivedLayer){
                 for(Neuron n : layer.getNeurons()){
                     if(n instanceof DerivedNeuron){
-                        double randBiasVal = randomDouble(-1, 1);
+                        double randBiasVal = randomDouble(0, 1);
                         Bias b = new Bias(n, biasID, randBiasVal);
                         ((DerivedNeuron) n).setBias(b);
                         biases.add(b);
@@ -101,7 +101,7 @@ public class Net {
     public void forwardPass(double[] argsArr)throws RuntimeException{
         reset();
         if(argsArr.length != inputNeurons)
-            throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!"));
+            throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!" + argsArr.length));
         if(layers.get(0) instanceof FeedableLayer){
             ((FeedableLayer) layers.get(0)).feed(argsArr);
         }
