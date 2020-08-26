@@ -20,7 +20,7 @@ public class BackpropagationModule {
     final private Net net;
     final private List<DerivedLayer<? extends DerivedNeuron>> derivedLayers;
     Map<Connection, List<Double>> gradientWeights = new HashMap<>();
-  //  Map<Bias, Double> gradientBiases =
+    Map<Bias, List<Double>> gradientBiases = new HashMap<>();
     private double errorT;
     private double [] expected;
     private int iteration;
@@ -37,6 +37,9 @@ public class BackpropagationModule {
         for(Connection c : net.getConnections()){
             gradientWeights.put(c, new LinkedList<>());
         }
+        for(Bias b : net.getBiases()){
+            gradientBiases.put(b, new LinkedList<>());
+        }
     }
     public void backPropagate(double [] exp) throws RuntimeErrorException {
         this.expected = exp;
@@ -44,7 +47,7 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
        // Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
-        Map<Bias, Double> gradientBiases = new HashMap<>(net.getBiases().size());
+       // Map<Bias, Double> gradientBiases = new HashMap<>(net.getBiases().size());
 
         /// TODO: 25.08.2020 averaging gradients
 
@@ -54,7 +57,7 @@ public class BackpropagationModule {
         }
         for (Bias bias : net.getBiases()){
             double delta = -gradientDescentRate * derivativeBias(bias);
-            gradientBiases.put(bias, delta);
+            gradientBiases.get(bias).add(delta);
         }
         if(iteration != 0 && iteration % updateRateAverage == 0){
             calculateAverageGradient();
@@ -74,10 +77,17 @@ public class BackpropagationModule {
             //entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives and biases
         }
-       /* for(Map.Entry<Bias, Double> entry : gradientBiases.entrySet()){
-            entry.getKey().updateBias(entry.getValue());
-            //biases should be updated after calculating all of the derivatives biases
-        }*/
+        for(Map.Entry<Bias, List<Double>> entry : gradientBiases.entrySet()){
+            double sum = 0;
+            for(Double d : entry.getValue()){
+                sum += d;
+            }
+            sum /= entry.getValue().size();
+            entry.getKey().updateBias(sum);
+            entry.getValue().clear();
+            //entry.getKey().updateWeight(entry.getValue());
+            //weights should be updated after calculating all of the derivatives and biases
+        }
         //todo remember to clear List after calculation
     }
     private double derivativeWeight(Connection c){

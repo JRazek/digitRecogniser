@@ -1,12 +1,11 @@
 package jrazek.neuralNetwork;
 
 import jrazek.neuralNetwork.backpropagation.BackpropagationModule;
-import jrazek.neuralNetwork.fileDecoder.FileDecoder;
-import jrazek.neuralNetwork.fileDecoder.HandWrittenNumber;
+import jrazek.neuralNetwork.filesManagers.FileDecoder;
+import jrazek.neuralNetwork.filesManagers.HandWrittenNumber;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Rules;
 
-import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
 import static jrazek.neuralNetwork.utils.Rules.showErrorEveryIteration;
 import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 

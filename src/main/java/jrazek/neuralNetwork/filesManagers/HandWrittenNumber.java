@@ -1,9 +1,8 @@
-package jrazek.neuralNetwork.fileDecoder;
+package jrazek.neuralNetwork.filesManagers;
 
 import jrazek.neuralNetwork.utils.Utils;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 
 public class HandWrittenNumber {
     double [] pixels;

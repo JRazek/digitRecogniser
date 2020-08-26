@@ -1,4 +1,4 @@
-package jrazek.neuralNetwork.fileDecoder;
+package jrazek.neuralNetwork.filesManagers;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

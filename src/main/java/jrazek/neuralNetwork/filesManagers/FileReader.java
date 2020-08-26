@@ -1,4 +1,4 @@
-package jrazek.neuralNetwork.fileDecoder;
+package jrazek.neuralNetwork.filesManagers;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
