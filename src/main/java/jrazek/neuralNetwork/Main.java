@@ -34,8 +34,8 @@ public class Main {
             iteration ++;
 
             if((iteration+1) % accuracyResetRate == 0){
-                System.out.println("Iteration: " + iteration + ", accuracy = " + accuracy.getAccuracy()*100 + "%");
-                System.out.println("Error " + iteration + ": " + backpropagationModule.showError());
+                System.out.println("Iteration: " + (iteration +1) + ", accuracy = " + accuracy.getAccuracy()*100 + "%");
+                System.out.println("Error " + (iteration +1) + ": " + backpropagationModule.showError());
                 accuracy.reset();
             }
         }

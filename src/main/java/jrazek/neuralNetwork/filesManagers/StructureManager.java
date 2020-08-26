@@ -99,7 +99,7 @@ public class StructureManager {
         for(Object o : ((JSONArray)json.get("biases"))){
             JSONObject connJSON = (JSONObject)o;
             int id = Integer.valueOf(connJSON.get("id").toString());
-            int value = Integer.valueOf(connJSON.get("value").toString());
+            double value = Double.valueOf(connJSON.get("value").toString());
             int layer = Integer.valueOf(connJSON.get("layer").toString());
             int neuron = Integer.valueOf(connJSON.get("neuron").toString());
             biasList.add(new JSONBias(id, value, layer, neuron));
