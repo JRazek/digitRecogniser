@@ -76,15 +76,18 @@ public class BackpropagationModule {
     }
     private double getChain(DerivedNeuron start){
         double chain = 1;
-        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L)
+        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L
         if(start instanceof OutputNeuron){
+            /// TODO: 26.08.2020 check this
             chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();
         }
         else {
+            double tmp = 1;
             for (Connection c : start.getOutPutConnections()) {
                 chain *= c.getWeight();//z(L) wrt a(L-1) (just w)
-                chain *= getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
+                tmp += getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
             }
+            chain *= tmp;
         }
         return chain;
     }
