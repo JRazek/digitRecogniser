@@ -5,6 +5,7 @@ import jrazek.neuralNetwork.abstracts.classes.layers.FeedableLayer;
 import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
 import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
+import jrazek.neuralNetwork.filesManagers.StructureManager;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
@@ -27,10 +28,19 @@ public class Net {
         initLayers();
         initNeurons();
         initBiases();
-        initConnections();
+        setConnections();
         reset();
     }
-
+    public Net(StructureManager.JSONNet jsonNet){
+        layers = new ArrayList<>();
+        connections = new ArrayList<>();
+        biases = new ArrayList<>();
+        initLayers();
+        initNeurons();
+        setBiases(jsonNet.biasList);
+        setConnections(jsonNet.connectionList);
+        reset();
+    }
     private void initLayers(){
         for(int layerNum = 0; layerNum < layersNum; layerNum ++){
 
@@ -67,7 +77,7 @@ public class Net {
             }
         }
     }
-    private void initConnections(){
+    private void setConnections(){
         int layerNum = 0;
         int connNum = 0;
         for(Layer<? extends Neuron> layer : layers){
@@ -152,5 +162,25 @@ public class Net {
     }
     public List<Layer<? extends Neuron>> getLayers() {
         return layers;
+    }
+
+    private void setConnections(List<StructureManager.JSONConnection> connectionList){
+        for(StructureManager.JSONConnection jsonConnection : connectionList){
+            Neuron from = layers.get(jsonConnection.fromLayerNum).getNeurons().get(jsonConnection.fromNeuronNum);
+            Neuron to = layers.get(jsonConnection.toLayerNum).getNeurons().get(jsonConnection.toNeuronNum);
+            Connection conn = new Connection(from, to, jsonConnection.id);
+            this.connections.add(conn);
+            conn.setWeight(jsonConnection.weight);
+            from.addConnection(conn);
+            to.addConnection(conn);
+        }
+    }
+    private void setBiases(List<StructureManager.JSONBias> biasList){
+        for(StructureManager.JSONBias bias: biasList){
+            DerivedNeuron n = (DerivedNeuron)layers.get(bias.layer).getNeurons().get(bias.neuron);
+            Bias bias1 = new Bias(n, bias.id, bias.value);
+            this.biases.add(bias1);
+            n.setBias(bias1);
+        }
     }
 }

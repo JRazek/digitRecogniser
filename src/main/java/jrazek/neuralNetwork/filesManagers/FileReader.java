@@ -1,6 +1,15 @@
 package jrazek.neuralNetwork.filesManagers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,4 +37,20 @@ public class FileReader {
     public static BufferedImage readImageFile(String path) throws IOException {
         return ImageIO.read(new File(path));
     }
+    public static JSONObject readJSONFile(String path){
+        JSONParser jsonParser = new JSONParser();
+
+        try{
+            java.io.FileReader reader = new java.io.FileReader(path);
+            return (JSONObject) jsonParser.parse(reader);
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static String formatJSON(String unformatted){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(JsonParser.parseString(unformatted));
+    }
 }
+

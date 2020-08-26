@@ -65,7 +65,7 @@ public class Utils {
         int g = (p>>8)&0xff;
         int b = p&0xff;
 
-        return (0.3f * r) + (0.59f * g) + (0.11f * b);
+        return p;
     }
     public static double round(double num, int n) {
         num *= Math.pow(10, n);

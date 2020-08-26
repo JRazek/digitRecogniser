@@ -6,7 +6,7 @@ public class Bias {
     private final Neuron neuron;
     private double value;
     private final int biasID;
-    public Bias(Neuron n, int bID,  double val){
+    public Bias(Neuron n, int bID, double val){
         this.neuron = n;
         this.biasID = bID;
         this.value = val;
