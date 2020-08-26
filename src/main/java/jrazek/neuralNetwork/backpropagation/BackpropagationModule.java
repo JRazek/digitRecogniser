@@ -14,7 +14,7 @@ import javax.management.RuntimeErrorException;
 import java.util.*;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
-import static jrazek.neuralNetwork.utils.Rules.updateRateAverage;
+import static jrazek.neuralNetwork.utils.Rules.batchSize;
 
 public class BackpropagationModule {
     final private Net net;
@@ -46,8 +46,6 @@ public class BackpropagationModule {
         this.errorT = getErrorT(expected);
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
-       // Map<Connection, Double> gradientWeights = new HashMap<>(net.getConnections().size());
-       // Map<Bias, Double> gradientBiases = new HashMap<>(net.getBiases().size());
 
         /// TODO: 25.08.2020 averaging gradients
 
@@ -59,7 +57,7 @@ public class BackpropagationModule {
             double delta = -gradientDescentRate * derivativeBias(bias);
             gradientBiases.get(bias).add(delta);
         }
-        if((iteration + 1) % updateRateAverage == 0){
+        if((iteration + 1) % batchSize == 0){
             calculateAverageGradient();
         }
         iteration ++;

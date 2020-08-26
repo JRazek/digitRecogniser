@@ -5,14 +5,15 @@ import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import javax.management.RuntimeErrorException;
 
 import static jrazek.neuralNetwork.utils.Utils.randomDouble;
+import static jrazek.neuralNetwork.utils.Utils.randomFloat;
 
 public class Connection {
-    private double weight;
+    private float weight;
     private final Neuron inputNeuron;
     private final Neuron outputNeuron;
     private final int id;
     public Connection(Neuron input, Neuron output, int id) throws RuntimeErrorException {
-        this.weight = randomDouble(0,1);
+        this.weight = randomFloat(-1,1)*(float)Math.sqrt(1f/(float)input.getLayer().getNeurons().size());
         this.inputNeuron = input;
         this.outputNeuron = output;
         this.id = id;
@@ -40,7 +41,7 @@ public class Connection {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 

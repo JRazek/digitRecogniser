@@ -67,7 +67,7 @@ public class Net {
             if(layer instanceof DerivedLayer){
                 for(Neuron n : layer.getNeurons()){
                     if(n instanceof DerivedNeuron){
-                        double randBiasVal = randomDouble(0, 1);
+                        double randBiasVal = randomDouble(-1, 1);
                         Bias b = new Bias(n, biasID, randBiasVal);
                         ((DerivedNeuron) n).setBias(b);
                         biases.add(b);
@@ -101,8 +101,8 @@ public class Net {
         if(w.length != connections.size())
             throw new RuntimeErrorException(new Error("sffsdf"));
         int wNum = 0;
-        for(Double d : w){
-            connections.get(wNum).setWeight(d);
+        for(double d : w){
+            connections.get(wNum).setWeight((float)d);
             wNum ++;
         }
     }
@@ -170,7 +170,7 @@ public class Net {
             Neuron to = layers.get(jsonConnection.toLayerNum).getNeurons().get(jsonConnection.toNeuronNum);
             Connection conn = new Connection(from, to, jsonConnection.id);
             this.connections.add(conn);
-            conn.setWeight(jsonConnection.weight);
+            conn.setWeight((float) jsonConnection.weight);
             from.addConnection(conn);
             to.addConnection(conn);
         }

@@ -50,7 +50,7 @@ public abstract class DerivedNeuron extends Neuron{
         try {
             activationValue = sigmoid(netValue);
         }catch(RuntimeErrorException e){
-            System.out.println("======================" + super.getLayer().getLayerIndex());
+            //System.out.println("======================" + super.getLayer().getLayerIndex());
             //System.exit(1);
         }
     }
