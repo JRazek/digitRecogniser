@@ -7,7 +7,7 @@ public class Rules {
     public static final int outputNeurons = 10;
     public static final double gradientDescentRate = 0.1;
     public static final int maxIterations = -1;
-    public static int batchSize = 10; //every x images the gradient is averaged and then changed
+    public static int batchSize = 150; //every x images the gradient is averaged and then changed
 
     /**
      * determines if the file should be read and the path of of it
