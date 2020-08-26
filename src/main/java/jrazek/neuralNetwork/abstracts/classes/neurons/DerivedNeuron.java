@@ -47,7 +47,12 @@ public abstract class DerivedNeuron extends Neuron{
         netValue += bias.getValue();
     }
     public void countActivation(){
-        activationValue = sigmoid(netValue);
+        try {
+            activationValue = sigmoid(netValue);
+        }catch(RuntimeErrorException e){
+            System.out.println("======================" + super.getLayer().getLayerIndex());
+            //System.exit(1);
+        }
     }
     public double getTest(){
         return 1;

@@ -76,4 +76,7 @@ public class StructureManager {
             e.printStackTrace();
         }
     }
+    public static Net load(String path){
+        return null;
+    }
 }

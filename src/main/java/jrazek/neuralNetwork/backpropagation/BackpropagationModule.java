@@ -19,8 +19,8 @@ import static jrazek.neuralNetwork.utils.Rules.updateRateAverage;
 public class BackpropagationModule {
     final private Net net;
     final private List<DerivedLayer<? extends DerivedNeuron>> derivedLayers;
-    Map<Connection, List<Double>> gradientWeights = new HashMap<>();
-    Map<Bias, List<Double>> gradientBiases = new HashMap<>();
+    private Map<Connection, List<Double>> gradientWeights = new HashMap<>();
+    private Map<Bias, List<Double>> gradientBiases = new HashMap<>();
     private double errorT;
     private double [] expected;
     private int iteration;
@@ -59,13 +59,12 @@ public class BackpropagationModule {
             double delta = -gradientDescentRate * derivativeBias(bias);
             gradientBiases.get(bias).add(delta);
         }
-        if(iteration != 0 && iteration % updateRateAverage == 0){
+        if((iteration + 1) % updateRateAverage == 0){
             calculateAverageGradient();
         }
         iteration ++;
     }
     private void calculateAverageGradient(){
-
         for(Map.Entry<Connection, List<Double>> entry : gradientWeights.entrySet()){
             double sum = 0;
             for(Double d : entry.getValue()){

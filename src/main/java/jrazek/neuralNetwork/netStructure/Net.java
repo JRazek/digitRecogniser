@@ -87,7 +87,6 @@ public class Net {
             }
         }
     }
-
     public void setWeights(Double[] w) throws RuntimeErrorException{
         if(w.length != connections.size())
             throw new RuntimeErrorException(new Error("sffsdf"));
@@ -100,7 +99,7 @@ public class Net {
 
     public void forwardPass(double[] argsArr)throws RuntimeException{
         reset();
-        if(argsArr.length != inputNeurons)
+        if(argsArr.length != layers.get(0).getNeurons().size())
             throw new RuntimeException(new Error("WRONG INITIAL CAPACITY!" + argsArr.length + " =/= " + inputNeurons));
         if(layers.get(0) instanceof FeedableLayer){
             ((FeedableLayer) layers.get(0)).feed(argsArr);
@@ -138,8 +137,8 @@ public class Net {
     }
 
     public OutputLayer getOutputLayer() throws  RuntimeErrorException{
-        if(layers.get(layersNum-1) instanceof OutputLayer)
-            return (OutputLayer)layers.get(layersNum-1);
+        if(layers.get(layers.size()-1) instanceof OutputLayer)
+            return (OutputLayer)layers.get(layers.size()-1);
         else
             throw new RuntimeErrorException(new Error("2123 ERROR"));
     }

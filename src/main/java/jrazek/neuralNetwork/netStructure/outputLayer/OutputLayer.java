@@ -15,9 +15,13 @@ public class OutputLayer extends DerivedLayer<OutputNeuron> {
             super.addNeuron(new OutputNeuron(this, i));
         }
     }
-    public void showOutput(){
+    public double[] showOutput(){
+        double[] r = new double[super.getNeurons().size()];
+        int i = 0;
         for(DerivedNeuron neuron : super.getNeurons()){
-            System.out.println(neuron.getActivationValue());
+            r[i] = neuron.getActivationValue();
+            i++;
         }
+        return r;
     }
 }
