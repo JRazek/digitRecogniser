@@ -1,15 +1,12 @@
 package jrazek.neuralNetwork.filesManagers;
 
-import jrazek.neuralNetwork.abstracts.classes.layers.DerivedLayer;
 import jrazek.neuralNetwork.abstracts.classes.layers.Layer;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 import jrazek.neuralNetwork.netStructure.Bias;
 import jrazek.neuralNetwork.netStructure.Connection;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenLayer;
-import jrazek.neuralNetwork.netStructure.hiddenLayer.HiddenNeuron;
 import jrazek.neuralNetwork.netStructure.inputLayer.InputLayer;
-import jrazek.neuralNetwork.netStructure.inputLayer.InputNeuron;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -80,7 +77,7 @@ public class StructureManager {
             e.printStackTrace();
         }
     }
-    public static JSONNet load(String path){
+    public static JSONNet load(String path) throws IOException {
        // readJSONFile
 
         JSONObject json = FileReader.readJSONFile(path);

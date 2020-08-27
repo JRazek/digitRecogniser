@@ -1,5 +1,6 @@
 package jrazek.neuralNetwork.netStructure;
 
+import jrazek.neuralNetwork.abstracts.classes.neurons.DerivedNeuron;
 import jrazek.neuralNetwork.abstracts.classes.neurons.Neuron;
 
 import javax.management.RuntimeErrorException;
@@ -8,12 +9,15 @@ import static jrazek.neuralNetwork.utils.Utils.randomDouble;
 import static jrazek.neuralNetwork.utils.Utils.randomFloat;
 
 public class Connection {
-    private float weight;
+    private double weight;
     private final Neuron inputNeuron;
     private final Neuron outputNeuron;
     private final int id;
     public Connection(Neuron input, Neuron output, int id) throws RuntimeErrorException {
-        this.weight = randomFloat(-1,1)*(float)Math.sqrt(1f/(float)input.getLayer().getNeurons().size());
+        int add = 0;
+        if(input instanceof DerivedNeuron)
+            add = input.getLayer().getNeurons().size();
+        this.weight = randomDouble(-10,10)*Math.sqrt(2f/(double)(input.getLayer().getNeurons().size()-1 + add));
         this.inputNeuron = input;
         this.outputNeuron = output;
         this.id = id;
@@ -41,7 +45,7 @@ public class Connection {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

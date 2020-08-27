@@ -7,6 +7,8 @@ import jrazek.neuralNetwork.filesManagers.StructureManager;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Accuracy;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static jrazek.neuralNetwork.utils.Rules.*;
@@ -17,7 +19,11 @@ public class Main {
             FileDecoder fileDecoder = new FileDecoder();
             Net net;
             if (loadFromFile && !loadFile.equals("")) {
-                net = new Net(StructureManager.load(loadFile));
+                try {
+                    net = new Net(StructureManager.load(loadFile));
+                }catch (IOException e){
+                    net = new Net();
+                }
             } else {
                 net = new Net();
             }
