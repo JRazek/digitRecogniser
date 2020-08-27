@@ -1,7 +1,10 @@
 package jrazek.neuralNetwork.utils;
+import jrazek.neuralNetwork.netStructure.Connection;
 import org.w3c.dom.css.RGBColor;
 
 import javax.management.RuntimeErrorException;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static jrazek.neuralNetwork.utils.Rules.sigmoidDivider;
@@ -39,6 +42,13 @@ public class Utils {
     public static double randomDouble(double min, double max){
         Random r = new Random();
         return min + (max - min) * r.nextDouble();
+    }
+    public static int valuesMapSize(Map<?, List<?>> map){
+        int sum = 0;
+        for(Map.Entry<?, List<?>> entry : map.entrySet()){
+            sum += entry.getValue().size();
+        }
+        return sum;
     }
     public static float randomFloat(float min, float max){
         Random r = new Random();

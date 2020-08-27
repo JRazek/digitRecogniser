@@ -15,6 +15,7 @@ import java.util.*;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
 import static jrazek.neuralNetwork.utils.Rules.batchSize;
+import static jrazek.neuralNetwork.utils.Utils.randomInt;
 
 public class BackpropagationModule {
     final private Net net;
@@ -69,6 +70,11 @@ public class BackpropagationModule {
                 sum += d;
             }
             sum /= entry.getValue().size();
+            if(randomInt(0,100) > 99){
+                int lNUM = entry.getKey().getInputNeuron().getLayer().getLayerIndex();
+                if(lNUM != 0 && lNUM != 1)
+                    System.out.println("GRADIENT = " + sum + " LAYER = " + lNUM);
+            }
             entry.getKey().updateWeight(sum);
             entry.getValue().clear();
             //entry.getKey().updateWeight(entry.getValue());
@@ -103,7 +109,7 @@ public class BackpropagationModule {
     }
     private double getChain(DerivedNeuron start){
         double chain = 1;
-        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L
+        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L)
         if(start instanceof OutputNeuron){
             /// TODO: 27.08.2020   do it without recurrence. less computing speed.
             chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();

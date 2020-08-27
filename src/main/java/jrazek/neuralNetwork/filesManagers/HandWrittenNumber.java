@@ -4,6 +4,8 @@ import jrazek.neuralNetwork.utils.Utils;
 
 import java.awt.image.BufferedImage;
 
+import static jrazek.neuralNetwork.utils.Utils.randomDouble;
+
 public class HandWrittenNumber {
     double [] pixels;
     int number;

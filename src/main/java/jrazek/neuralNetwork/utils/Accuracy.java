@@ -3,10 +3,14 @@ package jrazek.neuralNetwork.utils;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.netStructure.outputLayer.OutputNeuron;
 
+import javax.management.RuntimeErrorException;
+
 public class Accuracy {
     float timesMeasured = 0;
     float ok = 0;
     Net net;
+    int predicted;
+    int iteration = 0;
     public Accuracy(Net net){
         this.net = net;
     }
@@ -21,10 +25,18 @@ public class Accuracy {
             }
             i++;
         }
+
+        predicted = bestIndex;
+
         if(bestIndex == target){
             this.ok ++;
         }
+        //System.out.println("OK IS " + target + " PREDICTION IS " + bestIndex);
         this.timesMeasured ++;
+        this.iteration ++;
+    }
+    public int getPrediction(){
+        return predicted;
     }
     public void reset(){
         this.timesMeasured = 0;

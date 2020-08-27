@@ -7,21 +7,21 @@ public class Rules {
     public static final int outputNeurons = 10;
     public static final double gradientDescentRate = 0.01;
     public static final int maxIterations = -1;
-    public static int batchSize = 1; //every x images the gradient is averaged and then changed
-    public static boolean repeat = true;
+    public static int batchSize = 10; //every x images the gradient is averaged and then changed
+    public static boolean repeat = true; //if dataset end - repeat
 
     public static boolean save = true;
-    public static int saveRate = 3000;
+    public static int saveRate = 1000;
     public static String savePath = "nets/cp.json";
 
     /**
      * determines if the file should be read and the path of of it
      * */
-    public static boolean loadFromFile = false;
+    public static boolean loadFromFile = true;
     public static String loadFile = "nets/cp.json";
-    public static String navigationFile = "dataSet/training-a.csv";
-    public static String datasetFolder = "dataSet/training-a/";
+
+    public static String datasetFolder = "dataSet/";
 
     public static int accuracyResetRate = 100;
-    public static double sigmoidDivider = 100;
+    public static double sigmoidDivider = 1;
 }

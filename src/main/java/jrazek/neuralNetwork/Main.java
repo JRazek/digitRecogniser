@@ -7,7 +7,10 @@ import jrazek.neuralNetwork.filesManagers.StructureManager;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Accuracy;
 
+import java.util.Arrays;
+
 import static jrazek.neuralNetwork.utils.Rules.*;
+import static jrazek.neuralNetwork.utils.Utils.randomInt;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,6 +40,7 @@ public class Main {
 
                     if ((iteration + 1) % accuracyResetRate == 0) {
                         System.out.println("Iteration: " + (iteration + 1) + ", accuracy = " + accuracy.getAccuracy() * 100 + "%");
+                        //System.out.println("Iteration: " + (iteration + 1) + ", given = " + num.getTarget() + ", predicted = " + accuracy.getPrediction());
                         System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
                         accuracy.reset();
                     }
@@ -46,6 +50,7 @@ public class Main {
                 }
                 if(save)
                     StructureManager.save(net);
+                System.out.println("HEEERE");
                 fileDecoder.reset();
                 //todo should make the sum of shuffled n training examples
             }

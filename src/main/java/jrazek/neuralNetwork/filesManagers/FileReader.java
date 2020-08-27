@@ -35,6 +35,7 @@ public class FileReader {
         return lines;
     }
     public static BufferedImage readImageFile(String path) throws IOException {
+       // System.out.println(path);
         return ImageIO.read(new File(path));
     }
     public static JSONObject readJSONFile(String path){

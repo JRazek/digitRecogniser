@@ -1,47 +1,67 @@
 package jrazek.neuralNetwork.filesManagers;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static jrazek.neuralNetwork.utils.Rules.*;
+import static jrazek.neuralNetwork.utils.Utils.randomDouble;
+import static jrazek.neuralNetwork.utils.Utils.randomInt;
 
 public class FileDecoder {
-    private List<String> digits;
-    private int lineNum = 0;
-    public FileDecoder(){
-        digits = FileReader.readTextFile(navigationFile);
-    }
-    private boolean hasNextImg(){
-        return (digits.size() - 1 != lineNum);
-    }
-    private String readNext(){
-        if(digits.get(lineNum) != null){
-            lineNum ++;
-            return digits.get(lineNum);
-        }
+    private Map<Integer, List<String>> digitsPaths;
+    private Map<Integer, Integer> currentDigitInList;
+    private int iteration;
+    private int currentDigit;
 
-        return null;
-    }
-    public boolean hasNext(){
-        return (lineNum + 1 != digits.size());
+    private int togo;
+    public FileDecoder(){
+        reset();
     }
     public void reset(){
-        lineNum = 0;
+        digitsPaths = new HashMap<>();
+        currentDigitInList = new HashMap<>();
+        iteration = 0;
+        currentDigit = 0;
+        togo = 0;
+        int smallest = Integer.MAX_VALUE;
+        for(int i = 0; i < 10; i ++){
+            List<String> l = Arrays.asList(new File(datasetFolder + i).list());
+            digitsPaths.put(i, l);
+            currentDigitInList.put(i,0);
+            if(smallest > l.size())
+                smallest = l.size();
+        }
+        togo = smallest*10;
+       // throw new RuntimeException(new Error("t "+togo));
     }
-    public HandWrittenNumber getNextImage() {
+    public boolean hasNext(){
+        return iteration+1 < togo;
+    }
+    public HandWrittenNumber getNextImage(){
         try {
-            String [] data = Objects.requireNonNull(readNext()).split(",");
-            BufferedImage img = FileReader.readImageFile(datasetFolder + data[0]);
-            int digit = Integer.parseInt(data[3]);
-            return new HandWrittenNumber(img, digit);
-        }catch (NumberFormatException | IOException e){
+            if (currentDigit == 10) {
+                currentDigit = 0;
+            }
+           // System.out.println(currentDigit);
+
+            String imgFile = digitsPaths.get(currentDigit).get(currentDigitInList.get(currentDigit));
+            BufferedImage img = FileReader.readImageFile(datasetFolder + currentDigit + "/" + imgFile);
+            HandWrittenNumber number = new HandWrittenNumber(img, currentDigit);
+            currentDigitInList.put(currentDigit, currentDigitInList.get(currentDigit) + 1);
+
+
+
+            currentDigit++;
+            iteration++;
+
+
+
+            return number;
+        }catch (IOException | NullPointerException e){
             e.printStackTrace();
         }
-
-       //filename,original filename,scanid,digit,database name original,contributing team,database name
-        //a00000.png,Scan_58_digit_5_num_8.png,58,5,BHDDB,Buet_Broncos,training-a
         return null;
     }
 }
