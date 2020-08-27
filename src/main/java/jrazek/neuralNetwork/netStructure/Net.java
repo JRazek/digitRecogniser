@@ -28,7 +28,7 @@ public class Net {
         initLayers();
         initNeurons();
         initBiases();
-        setConnections();
+        initConnections();
         reset();
     }
     public Net(StructureManager.JSONNet jsonNet){
@@ -76,7 +76,7 @@ public class Net {
             }
         }
     }
-    private void setConnections(){
+    private void initConnections(){
         int layerNum = 0;
         int connNum = 0;
         for(Layer<? extends Neuron> layer : layers){
@@ -85,7 +85,7 @@ public class Net {
                     Connection conn = new Connection(catcher, caught,connNum);
                     catcher.addConnection(conn);
                     caught.addConnection(conn);
-                    connections.add(0, conn);//just the reverse waay
+                    connections.add(conn);//just the reverse waay
                     connNum++;
                 }
             }

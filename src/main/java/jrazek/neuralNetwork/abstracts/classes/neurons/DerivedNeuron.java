@@ -15,7 +15,7 @@ import static jrazek.neuralNetwork.utils.Utils.sigmoid;
 public abstract class DerivedNeuron extends Neuron{
     private double netValue;
     private double activationValue;
-    private double currentDerivative_aWRTz;
+    private double currentChain;
     private Bias bias;
     public DerivedNeuron(Layer<? extends Neuron> layer, int number) {
         super(layer, number);
@@ -49,15 +49,12 @@ public abstract class DerivedNeuron extends Neuron{
     }
     public void countActivation(){
         try {
+            currentChain = 0;
             activationValue = sigmoid(netValue);
-            currentDerivative_aWRTz = activationValue*(1-activationValue);
         }catch(RuntimeErrorException e){
             //System.out.println("======================" + super.getLayer().getLayerIndex());
             //System.exit(1);
         }
-    }
-    public double getTest(){
-        return 1;
     }
     public double getNetValue() {
         return netValue;
@@ -75,9 +72,12 @@ public abstract class DerivedNeuron extends Neuron{
         }
         return derived;
     }
+    public double getCurrentChain() {
+        return currentChain;
+    }
 
-    public double currentDerivative_aWRTz() {
-        return currentDerivative_aWRTz;
+    public void setCurrentChain(double currentChain) {
+        this.currentChain = currentChain;
     }
 
     public double getActivationValue() {

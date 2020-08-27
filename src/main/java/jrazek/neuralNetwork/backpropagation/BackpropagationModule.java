@@ -51,11 +51,11 @@ public class BackpropagationModule {
         /// TODO: 25.08.2020 averaging gradients
 
         for (Connection conn : net.getConnections()){
-            double delta = -gradientDescentRate * derivativeWeight(conn);
+            double delta = -gradientDescentRate * differentiateWeight(conn);
             gradientWeights.get(conn).add(delta);
         }
         for (Bias bias : net.getBiases()){
-            double delta = -gradientDescentRate * derivativeBias(bias);
+            double delta = -gradientDescentRate * differentiateBias(bias);
             gradientBiases.get(bias).add(delta);
         }
         if((iteration + 1) % batchSize == 0){
@@ -93,7 +93,7 @@ public class BackpropagationModule {
         }
         //todo remember to clear List after calculation
     }
-    private double derivativeWeight(Connection c){
+    private double differentiateWeight(Connection c){
         DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
         double result = 1;
 
@@ -104,10 +104,12 @@ public class BackpropagationModule {
 
         return result * getChain(startingNeuron);
     }
-    private double derivativeBias(Bias b){
+    private double differentiateBias(Bias b){
         return getChain((DerivedNeuron)b.getNeuron());
     }
-    private double getChain(DerivedNeuron start){
+    private double getChain(DerivedNeuron start){/*
+        if(start.getCurrentChain() != 0)/
+            return start.getCurrentChain();*/
         double chain = 1;
         chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L)
         if(start instanceof OutputNeuron){
@@ -121,6 +123,7 @@ public class BackpropagationModule {
                 tmp += getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
             }
             chain *= tmp;
+            start.setCurrentChain(chain);
         }
         return chain;
     }

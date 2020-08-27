@@ -5,7 +5,7 @@ public class Rules {
     public static final int inputNeurons = 784;
     public static final int hiddenNeurons = 16;
     public static final int outputNeurons = 10;
-    public static final double gradientDescentRate = 1;
+    public static final double gradientDescentRate = 0.5;
     public static final int maxIterations = -1;
     public static int batchSize = 10; //every x images the gradient is averaged and then changed
     public static boolean repeat = true; //if dataset end - repeat
@@ -22,6 +22,6 @@ public class Rules {
 
     public static String datasetFolder = "dataSet/";
 
-    public static int accuracyResetRate = 100;
+    public static int accuracyResetRate = 1000;
     public static double sigmoidDivider = 1;
 }

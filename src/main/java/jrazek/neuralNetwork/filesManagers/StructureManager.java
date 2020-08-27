@@ -85,7 +85,7 @@ public class StructureManager {
         List<JSONBias> biasList = new ArrayList<>();
         for(Object o : ((JSONArray)json.get("connections"))){
             JSONObject connJSON = (JSONObject)o;
-            System.out.println();
+            //System.out.println();
             int id = Integer.valueOf(connJSON.get("id").toString());
             int toLayer = Integer.valueOf(connJSON.get("toLayer").toString());
             int toNeuron = Integer.valueOf(connJSON.get("toNeuron").toString());
