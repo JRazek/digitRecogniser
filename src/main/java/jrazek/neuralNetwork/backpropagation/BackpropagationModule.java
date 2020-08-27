@@ -94,6 +94,7 @@ public class BackpropagationModule {
         //todo remember to clear List after calculation
     }
     private double differentiateWeight(Connection c){
+
         DerivedNeuron start = (DerivedNeuron)c.getOutputNeuron();
         double result = 1;
         if(c.getInputNeuron() instanceof DerivedNeuron)
@@ -114,7 +115,16 @@ public class BackpropagationModule {
         double chain = start.getActivationValue()*(1-start.getActivationValue());
 
         if(start instanceof OutputNeuron)
-            return -2*
+            chain *= -2*(expected[start.getIndexInLayer()] - start.getActivationValue());
+        else{
+            double tmp = 0;
+            for(Connection c : start.getOutPutConnections()){
+                tmp += c.getWeight()*getChain((DerivedNeuron)c.getOutputNeuron());
+            }
+            chain *= tmp;
+        }
+        start.setCurrentChain(chain);
+        return chain;
     }
     private double getErrorT(double [] expected){
         double sum = 0;
