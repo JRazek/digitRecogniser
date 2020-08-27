@@ -94,38 +94,27 @@ public class BackpropagationModule {
         //todo remember to clear List after calculation
     }
     private double differentiateWeight(Connection c){
-        DerivedNeuron startingNeuron = ((DerivedNeuron)c.getOutputNeuron());
+        DerivedNeuron start = (DerivedNeuron)c.getOutputNeuron();
         double result = 1;
+        if(c.getInputNeuron() instanceof DerivedNeuron)
+            result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();
+        else if(c.getInputNeuron() instanceof InputNeuron)
+            result = ((InputNeuron) c.getInputNeuron()).getOutput();
 
-        if(c.getInputNeuron() instanceof InputNeuron)
-            result = ((InputNeuron) c.getInputNeuron()).getOutput();//1
-        else if(c.getInputNeuron() instanceof DerivedNeuron)
-            result = ((DerivedNeuron) c.getInputNeuron()).getActivationValue();//1
 
-        return result * getChain(startingNeuron);
+        return result * getChain(start);
     }
     private double differentiateBias(Bias b){
         return getChain((DerivedNeuron)b.getNeuron());
     }
-    private double getChain(DerivedNeuron start){/*
-        if(start.getCurrentChain() != 0)/
-            return start.getCurrentChain();*/
-        double chain = 1;
-        chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L)
-        if(start instanceof OutputNeuron){
-            /// TODO: 27.08.2020   do it without recurrence. less computing speed.
-            chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();
-        }
-        else {
-            double tmp = 0;
-            for (Connection c : start.getOutPutConnections()) {
-                chain *= c.getWeight();//z(L) wrt a(L-1) (just w)
-                tmp += getChain((DerivedNeuron) c.getOutputNeuron()); //further chaining
-            }
-            chain *= tmp;
-            start.setCurrentChain(chain);
-        }
-        return chain;
+    private double getChain(DerivedNeuron start){
+        if(start.getCurrentChain() != 0)
+            return start.getCurrentChain();
+
+        double chain = start.getActivationValue()*(1-start.getActivationValue());
+
+        if(start instanceof OutputNeuron)
+            return -2*
     }
     private double getErrorT(double [] expected){
         double sum = 0;
