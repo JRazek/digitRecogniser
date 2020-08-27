@@ -39,11 +39,12 @@ public class Main {
                         System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
                         accuracy.reset();
                     }
-                    if((iteration + 1) % saveRate == 0){
+                    if((iteration + 1) % saveRate == 0 && save){
                         StructureManager.save(net);
                     }
                 }
-                StructureManager.save(net);
+                if(save)
+                    StructureManager.save(net);
                 fileDecoder.reset();
                 //todo should make the sum of shuffled n training examples
             }

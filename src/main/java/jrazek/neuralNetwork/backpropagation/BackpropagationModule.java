@@ -105,7 +105,7 @@ public class BackpropagationModule {
         double chain = 1;
         chain *= start.getActivationValue()*(1-start.getActivationValue());//a(L) wrt z(L
         if(start instanceof OutputNeuron){
-            /// TODO: 26.08.2020 check this
+            /// TODO: 27.08.2020   do it without recurrence. less computing speed.
             chain *= 2*(start.getActivationValue() - expected[start.getIndexInLayer()])*start.getActivationValue();
         }
         else {
