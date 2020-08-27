@@ -11,13 +11,14 @@ import jrazek.neuralNetwork.netStructure.outputLayer.OutputLayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.management.RuntimeErrorException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jrazek.neuralNetwork.utils.Rules.savePath;
+import static jrazek.neuralNetwork.utils.Rules.*;
 
 @SuppressWarnings("unchecked")
 public class StructureManager {
@@ -77,10 +78,14 @@ public class StructureManager {
             e.printStackTrace();
         }
     }
-    public static JSONNet load(String path) throws IOException {
+    public static JSONNet load(String path) throws RuntimeErrorException, IOException {
        // readJSONFile
-
-        JSONObject json = FileReader.readJSONFile(path);
+        JSONObject json;
+        try {
+            json = FileReader.readJSONFile(path);
+        }catch (IOException e){
+            throw new IOException();
+        }
         List<JSONConnection> connectionList = new ArrayList<>();
         List<JSONBias> biasList = new ArrayList<>();
         for(Object o : ((JSONArray)json.get("connections"))){
@@ -94,6 +99,7 @@ public class StructureManager {
             double weight = Double.valueOf(connJSON.get("weight").toString());
             connectionList.add(new JSONConnection(id, toLayer, toNeuron, fromLayer, fromNeuron, weight));
         }
+        int connSum = hiddenNeurons*(layersNum-2) + hiddenNeurons*(inputNeurons+outputNeurons);
         for(Object o : ((JSONArray)json.get("biases"))){
             JSONObject connJSON = (JSONObject)o;
             int id = Integer.valueOf(connJSON.get("id").toString());

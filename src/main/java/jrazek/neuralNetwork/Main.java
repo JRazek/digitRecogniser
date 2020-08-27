@@ -7,9 +7,7 @@ import jrazek.neuralNetwork.filesManagers.StructureManager;
 import jrazek.neuralNetwork.netStructure.Net;
 import jrazek.neuralNetwork.utils.Accuracy;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 
 import static jrazek.neuralNetwork.utils.Rules.*;
 import static jrazek.neuralNetwork.utils.Utils.randomInt;
@@ -22,6 +20,7 @@ public class Main {
                 try {
                     net = new Net(StructureManager.load(loadFile));
                 }catch (IOException e){
+                    System.out.println("FILE NOT FOUND CREATING NEW NETWORK");
                     net = new Net();
                 }
             } else {
@@ -30,7 +29,7 @@ public class Main {
             BackpropagationModule backpropagationModule = new BackpropagationModule(net);
             Accuracy accuracy = new Accuracy(net);
             int iteration = 0;
-            while(repeat) {
+            do {
                 while (fileDecoder.hasNext() && (maxIterations == -1 || iteration < maxIterations)) {
                     HandWrittenNumber num = fileDecoder.getNextImage();
                    // net.forwardPass(new double[]{0.99, 0, 0, 0.99, 0, 0, 0, 0.13, 0, 0,0.1,0.543, .21, .765, .123, .765});
@@ -49,18 +48,18 @@ public class Main {
                     if ((iteration + 1) % accuracyResetRate == 0) {
                         System.out.println("Iteration: " + (iteration + 1) + ", accuracy = " + accuracy.getAccuracy() * 100 + "%");
                         //System.out.println("Iteration: " + (iteration + 1) + ", given = " + num.getTarget() + ", predicted = " + accuracy.getPrediction());
-                        System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
+                        if(learnMode)System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
                         accuracy.reset();
                     }
-                    if((iteration + 1) % saveRate == 0 && save && !learnMode){
+                    if((iteration + 1) % saveRate == 0 && save && learnMode){
                         StructureManager.save(net);
                     }
                 }
-                if(save && !learnMode)
+                if(save && learnMode)
                     StructureManager.save(net);
                 System.out.println("Repeating dataset");
                 fileDecoder.reset();
                 //todo should make the sum of shuffled n training examples
-            }
+            }while (repeatDataset && learnMode);
     }
 }
