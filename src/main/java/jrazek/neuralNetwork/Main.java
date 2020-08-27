@@ -24,7 +24,8 @@ public class Main {
             while(repeat) {
                 while (fileDecoder.hasNext() && (maxIterations == -1 || iteration < maxIterations)) {
                     HandWrittenNumber num = fileDecoder.getNextImage();
-                    //net.forwardPass(new double[]{0.99, 0, 0, 0.99, 0, 0, 0, 0.13, 0, 0,0.1,0.543, .21, .765, .123, .765});
+                   // net.forwardPass(new double[]{0.99, 0, 0, 0.99, 0, 0, 0, 0.13, 0, 0,0.1,0.543, .21, .765, .123, .765});
+                    //accuracy.check(3);
                     net.forwardPass(num.getPixels());
                     accuracy.check(num.getTarget());
 

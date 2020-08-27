@@ -20,12 +20,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jrazek.neuralNetwork.utils.Rules.savePath;
+
 @SuppressWarnings("unchecked")
 public class StructureManager {
     private StructureManager(){
 
     }
-    private static String savePath = "nets/";
     public static void save(Net net){
         JSONObject json = new JSONObject();
         JSONArray layersJSON = new JSONArray();
@@ -68,7 +69,7 @@ public class StructureManager {
         json.put("biases", biasesJSON);
         json.put("connections", connectionsJSON);
         try {
-            File f = new File(savePath + "cp.json");
+            File f = new File(savePath);
             if(!f.exists())
                 f.createNewFile();
             FileWriter file = new FileWriter(f);

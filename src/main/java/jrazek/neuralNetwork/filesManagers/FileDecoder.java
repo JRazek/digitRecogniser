@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static jrazek.neuralNetwork.utils.Rules.inputNeurons;
+import static jrazek.neuralNetwork.utils.Rules.*;
 
 public class FileDecoder {
-    private String navigationFile = "dataSet/training-a.csv";
-    private String datasetFolder = "dataSet/training-a/";
     private List<String> digits;
     private int lineNum = 0;
     public FileDecoder(){
