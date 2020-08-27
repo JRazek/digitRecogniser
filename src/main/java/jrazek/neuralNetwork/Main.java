@@ -38,10 +38,12 @@ public class Main {
                     net.forwardPass(num.getPixels());
                     accuracy.check(num.getTarget());
 
-                    double[] target = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
                     //double [] target = new double[]{0, 0, 0, 0.99, 0, 0, 0, 0, 0, 0};
-                    target[num.getTarget()] = 0.99;
-                    backpropagationModule.backPropagate(target);
+                    if (learnMode) {
+                        double[] target = new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                        target[num.getTarget()] = 0.99;
+                        backpropagationModule.backPropagate(target);
+                    }
                     iteration++;
 
                     if ((iteration + 1) % accuracyResetRate == 0) {
@@ -50,13 +52,13 @@ public class Main {
                         System.out.println("Error " + (iteration + 1) + ": " + backpropagationModule.showError());
                         accuracy.reset();
                     }
-                    if((iteration + 1) % saveRate == 0 && save){
+                    if((iteration + 1) % saveRate == 0 && save && !learnMode){
                         StructureManager.save(net);
                     }
                 }
-                if(save)
+                if(save && !learnMode)
                     StructureManager.save(net);
-                System.out.println("HEEERE");
+                System.out.println("Repeating dataset");
                 fileDecoder.reset();
                 //todo should make the sum of shuffled n training examples
             }
