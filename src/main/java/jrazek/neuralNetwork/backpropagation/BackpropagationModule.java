@@ -70,11 +70,6 @@ public class BackpropagationModule {
                 sum += d;
             }
             sum /= entry.getValue().size();
-            if(randomInt(0,100) > 99){
-                int lNUM = entry.getKey().getInputNeuron().getLayer().getLayerIndex();
-                if(lNUM != 0 && lNUM != 1)
-                    System.out.println("GRADIENT = " + sum + " LAYER = " + lNUM);
-            }
             entry.getKey().updateWeight(sum);
             entry.getValue().clear();
             //entry.getKey().updateWeight(entry.getValue());
