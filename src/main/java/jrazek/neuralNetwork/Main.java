@@ -59,7 +59,6 @@ public class Main {
                     StructureManager.save(net);
                 System.out.println("Repeating dataset");
                 fileDecoder.reset();
-                //todo should make the sum of shuffled n training examples
             }while (repeatDataset && learnMode);
     }
 }

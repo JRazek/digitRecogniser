@@ -21,7 +21,6 @@ public class HandWrittenNumber {
                 pixels[j+i*x] = (Utils.toGrayscale(img.getRGB(j, i))/255f);
             }
         }
-        /// TODO: 25.08.2020 imageNormalization
     }
     public int getTarget(){
         return number;

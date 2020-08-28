@@ -15,7 +15,6 @@ import java.util.*;
 
 import static jrazek.neuralNetwork.utils.Rules.gradientDescentRate;
 import static jrazek.neuralNetwork.utils.Rules.batchSize;
-import static jrazek.neuralNetwork.utils.Utils.randomInt;
 
 public class BackpropagationModule {
     final private Net net;
@@ -48,8 +47,6 @@ public class BackpropagationModule {
         if(expected.length != net.getOutputLayer().getNeurons().size())
             throw new RuntimeErrorException(new Error("3123 ERROR"));
 
-        /// TODO: 25.08.2020 averaging gradients
-
         for (Connection conn : net.getConnections()){
             double delta = -gradientDescentRate * differentiateWeight(conn);
             gradientWeights.get(conn).add(delta);
@@ -72,7 +69,6 @@ public class BackpropagationModule {
             sum /= entry.getValue().size();
             entry.getKey().updateWeight(sum);
             entry.getValue().clear();
-            //entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives and biases
         }
         for(Map.Entry<Bias, List<Double>> entry : gradientBiases.entrySet()){
@@ -83,10 +79,8 @@ public class BackpropagationModule {
             sum /= entry.getValue().size();
             entry.getKey().updateBias(sum);
             entry.getValue().clear();
-            //entry.getKey().updateWeight(entry.getValue());
             //weights should be updated after calculating all of the derivatives and biases
         }
-        //todo remember to clear List after calculation
     }
     private double differentiateWeight(Connection c){
 
