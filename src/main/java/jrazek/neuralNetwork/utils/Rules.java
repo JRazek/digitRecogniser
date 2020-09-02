@@ -23,5 +23,5 @@ public class Rules {
     public static String datasetFolder = "dataSet/";
     public static boolean learnMode = true;
 
-    public static int accuracyResetRate = 6000;
+    public static int accuracyResetRate = 1000;
 }
