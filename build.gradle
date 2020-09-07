@@ -9,6 +9,14 @@ repositories {
     mavenCentral()
 }
 
+
+task Run(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "jrazek.neuralNetwork.Main"
+}
+
 dependencies {
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'com.google.code.gson:gson:2.8.6'

@@ -12,7 +12,7 @@ public class Rules {
 
     public static boolean save = true;
     public static int saveRate = 500;
-    public static String savePath = "nets/cp.json";
+    public static String savePath = "nets/cp.json";//
 
     /**
      * determines if the file should be read and the path of of it
@@ -23,5 +23,5 @@ public class Rules {
     public static String datasetFolder = "dataSet/";
     public static boolean learnMode = true;
 
-    public static int accuracyResetRate = 6000;
+    public static int accuracyResetRate = 1000;
 }
