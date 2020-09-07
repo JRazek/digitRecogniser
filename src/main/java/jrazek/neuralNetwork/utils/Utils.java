@@ -72,7 +72,7 @@ public class Utils {
         int r = (p>>16)&0xff;
         int g = (p>>8)&0xff;
         int b = p&0xff;
-
+        //making it proportional for human eye
         return (0.3f * r) + (0.59f * g) + (0.11f * b);
     }
     public static double round(double num, int n) {
