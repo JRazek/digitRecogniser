@@ -79,7 +79,7 @@ public class StructureManager {
         }
     }
     public static JSONNet load(String path) throws RuntimeErrorException, IOException {
-       // readJSONFile
+       // readJSONFilee
         JSONObject json;
         try {
             json = FileReader.readJSONFile(path);
