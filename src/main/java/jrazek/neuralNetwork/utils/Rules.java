@@ -12,7 +12,7 @@ public class Rules {
 
     public static boolean save = true;
     public static int saveRate = 500;
-    public static String savePath = "nets/cp.json";//
+    public static String savePath = "nets/cp.json";
 
     /**
      * determines if the file should be read and the path of of it
