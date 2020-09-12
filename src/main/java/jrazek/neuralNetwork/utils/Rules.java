@@ -8,7 +8,7 @@ public class Rules {
     public static final double gradientDescentRate = 0.0001;
     public static final int maxIterations = -1;
     public static int batchSize = 100; //every x images the gradient is averaged and then changed
-    public static boolean repeatDataset = true; //if dataset end - repeat.
+    public static boolean repeatDataset = true; //if dataset end - repeat
 
     public static boolean save = true;
     public static int saveRate = 500;
